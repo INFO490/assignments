@@ -11,3 +11,9 @@ Refer to Week 1 Lesson 3 on how to use Git.
  - Problem 1. The obligatory "Hello World" problem.
  - Problem 2. A famous simple interview question.
  - Problem 3. Simple statistics.
+
+3. [Week 3 Assignment](https://github.com/INFO490/assignments/tree/master/hw3)
+
+ - Problem 1. Simple statistics revisted.
+ - Problem 2. Using a class to represent an individual person.
+ - Problem 3. Simple statistics using Numpy.
