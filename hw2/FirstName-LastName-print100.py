@@ -1,18 +1,11 @@
 #!/usr/bin/python
 
 # Week 2 Problem 2. A famous simple interview question.
-
-# Print every number from 1 to 100.
-# If the number is a multiple of 4, print "info" instead.
-# If the number is a multiple of 6, print "matics" instead.
-# If the number is a multiple of 4 and 6, print "informatics" instead.
-
-# Make the file executable.
-# Write a function named list_informatics() that takes no argument and returns
-# a list of strings. (Use str() to convert numbers into strings.)
-# The print function must appear only once in your program in the main() function.
-
-# Rename this file using your name.
+# Do not delete the comments.
+# Do not chnage the functions names, do not change the input parameters.
+# Do not change the return types of the functions.
+# Your code goes to the part where it says your code goes here.
+# Do not change anything else other than the part where it says your code goes here.
 
 # Use Python 3 print() function
 from __future__ import print_function
@@ -27,10 +20,10 @@ def list_informatics():
 
     result = []
     
-    ######### WRITE YOUR CODE HERE #########
+    # your code goes here.
 
     return result
 
 if __name__ == '__main__':
 
-    ######### WRITE YOUR CODE HERE #########
+    # your code goes here.
