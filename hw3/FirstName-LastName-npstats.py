@@ -23,8 +23,10 @@ def get_columns(filename):
     >>> get_columns('ss12pil.csv')[0, :10]
     array([ 200.,   70.,  212.,   15.,   71.,   80.,   95.,  131.,  147.,  149.])
     '''
-    result = np.loadtxt( # your code goes here )
     
+    result = np.loadtxt( # your code goes here )
+    result = np.transpose(result)
+        
     return result
     
 def print_stats(input_array, title = None):
