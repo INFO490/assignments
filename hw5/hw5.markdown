@@ -29,13 +29,7 @@ In order to the `parse_page()`, we need to first understand how the HTML page yo
 
 ![inspect_element](babynames.png)
 
-Your browser should have a similar method that shows the HTML source. Note in the figure that a row is surrounded by
-
-    <tr align="right">...</tr>
-
-and each column within that row is surrounded by
-
-    <td>...</td>
+Your browser should have a similar method that shows the HTML source. Note in the figure that a row is surrounded by `<tr align="right">...</tr>` and each column within that row is surrounded by `<td>...</td>` or `<td align="center">...</td>`.
 
 - Use the [find_all()](http://www.crummy.com/software/BeautifulSoup/bs4/doc/#find-all) function to parse the HTML page and extract the fields `rank`, `male_name`, `number_of_males`, `female_name`, and `number_of_females`.
 
