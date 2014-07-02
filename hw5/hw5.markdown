@@ -13,13 +13,13 @@ Before you begin, install [Requests](http://docs.python-requests.org/en/latest/)
 We will create a class named `BabyNames`, which must have at minimum the following:
 
 - Attributes:
- <p>`state`(str): Two-letter abbreviation of state,</p>
- <p>`year`(str): Year from 1960 to 2013,</p>
- <p>`fields`(list of strings): Headers of the table.</p>
+ <p><code>state</code>(str): Two-letter abbreviation of state,</p>
+ <p><code>year</code>(str): Year from 1960 to 2013,</p>
+ <p><code>fields</code>(list of strings): Headers of the table.</p>
 
 - Methods:
- <p>`get_page`(self): Fetches the HTML page on SSA using Requests. Takes no argument and returns a string (unicode),</p>
- <p>`parse_page`(self, page): Uses Beautiful Soup to parse an HTML page fetched with get_page() method and converts it to pandas.DataFrame object. Takes a string (unicode) of concatenated HTML and returns pandas.DataFrame.</p>
+ <p><code>get_page(self)</code>: Fetches the HTML page on SSA using Requests. Takes no argument and returns a string (unicode),</p>
+ <p><code>parse_page(self, page)</code>: Uses Beautiful Soup to parse an HTML page fetched with get_page() method and converts it to pandas.DataFrame object. Takes a string (unicode) of concatenated HTML and returns pandas.DataFrame.</p>
 
 In the `get_page()` method, refer to [More Complicated POST requests](http://docs.python-requests.org/en/latest/user/quickstart/#more-complicated-post-requests) and
 
