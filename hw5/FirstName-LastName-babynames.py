@@ -86,7 +86,7 @@ if __name__ == '__main__':
     # parse the HTML page, data is a dictionary
     d = b.parse_page(p)
     # print top 5 names
-    print('Top 5 baby names')
+    print('Top 5 baby names for %s, %s' % (state, year))
     print('Females: ' + ', '.join('{}({})'.format(
           d[u'female_name'][i], d[u'number_of_females'][i]) for i in xrange(5)))
     print('Males: ' + ', '.join('{}({})'.format(
