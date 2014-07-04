@@ -1,6 +1,13 @@
 #!/usr/bin/python
 
 # Week 5 problem 3. Twitter.
+
+# Do not delete the comments.
+# Do not chnage the functions names, do not change the input parameters.
+# Do not change the return types of the functions.
+# Your code goes to the part where it says your code goes here.
+# Do not change anything else other than the part where it says your code goes here.
+
 # Most of the code below is copied verbatim or modified slightly
 # from the book Mining the Social Web 2nd Edition by Mathew A. Russell
 
