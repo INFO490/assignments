@@ -90,7 +90,7 @@ This part is all written for you. You don't have to change anything here.
 
 Grab the template file: [twittercloud.py](https://github.com/INFO490/assignments/blob/master/hw5/FirstName-LastName-twittercloud.py)
 
-I got the idea for this problem while I was talking to Ola from our class and she mentioned [infographics](http://en.wikipedia.org/wiki/Infographic). So if this assignment turns out to be too difficult, you can blame her (thanks, Ola!). Don't worry, because the bulk of the code is written and provided for you, and you only have to write two functions (`clean_statuses()` and `get_counts()`). We will begin with a trending topic, fetch some tweets, and create a [tag cloud](http://en.wikipedia.org/wiki/Tag_cloud) such as this one created by searching for __#informatics__ (I think I see Champaign in there):
+I got the idea for this problem while I was talking to Ola from our class and she mentioned [infographics](http://en.wikipedia.org/wiki/Infographic). So if this assignment turns out to be too difficult, you can blame her (thanks, Ola!). Don't worry, because the bulk of the code is already written and provided for you, and you only have to write two functions (`clean_statuses()` and `get_counts()`). We will begin with a trending topic, fetch some tweets, and create a [tag cloud](http://en.wikipedia.org/wiki/Tag_cloud) such as this one created by searching for __#informatics__ (I think I see Champaign in there):
 
 ![cloud](cloud.png)
 
@@ -130,9 +130,9 @@ The argument `statuses` is a list of dictionaries, so the texts we need are in t
 
 These texts will be UNICODE strings, and if you are using Python 2, you have to convert them to ASCII strings. You can do this by
 
-    status = [s.encode('ascii', 'ignore') for s in status]
+    status_texts = [text.encode('ascii', 'ignore') for text in status_texts]
 
-If you are not familiar with these syntaxes, these are called [list comprehensions](http://lmgtfy.com/?q=python+list+comprehension).
+If you are not familiar with these syntaxes, these are called [list comprehensions](http://lmgtfy.com/?q=python+list+comprehension). These two lines are already in the template so you don't have to write them again.
 
 Now your job is to write the rest of this function by using `re` regular expression operations to
 
@@ -145,11 +145,11 @@ and remove all words that contain the following:
 - links (begins with http), and
 - any non-alphabetical characters.
 
-The easiest way to do this (that I can think of) is substituting the above matching pattern with empty strings `''`, and at the end, using list comprehension to remove all the empty strings from the list.
+The easiest way to do this (that I can think of) is substituting any word that matches the above patterns with empty strings `''` (using regular expressions, or regex for short), and at the end, using list comprehension to remove all the empty strings from the list.
 
 At this point, it might be a good idea to
 
-- Convert everything to lower cases.
+- Convert everything to lower cases (this will make the tag cloud prettier in my opinion).
 
 Finally,
 
@@ -161,7 +161,7 @@ If you are confused about anything, you can simply google e.g. "python convert s
 
 Now, returned from the `clean_statuses()` function is a list of nicely cleaned-up lowercase words. To create a tag cloud, we need the frequency of each word, because the size of each word in the tag cloud is determined by the frequency of the word.
 
-However, our third-party library _PyTagCloud_ needs a list of tuples of the form (word, frequency) in order to create a tag cloud. Thus, we will write a function named `get_counts()` to calculate the frequency of each word and return a list of tuple of the form (string, int). Using Pandas makes the job easy.
+However, our third-party library _PyTagCloud_ needs a list of tuples of the form (word, frequency) in order to create a tag cloud. Thus, we will write a function named `get_counts()` to calculate the frequency of each word and return a list of tuple of the form (string, int). Using Pandas makes the job easy, so
 
 - Create a [pandas.Series](http://pandas.pydata.org/pandas-docs/dev/generated/pandas.Series.html) object from a list of a list of strings `words`.
 
@@ -180,9 +180,11 @@ Now, we are finally ready to use the third-party library _pytagcloud_ to create 
     tags = make_tags(word_counts, maxsize = 120)
     create_tag_image(tags, 'cloud.png', size = (900, 600), fontname = 'Lobster')
 
-This will create the tag cloud in the file `cloud.png`.
+This will create the tag cloud in the file `cloud.png`. Open it up,
 
     $ xdg-open cloud.png
+
+and see how pretty it is.
 
 #### Submission Instructions
 
