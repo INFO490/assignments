@@ -90,7 +90,7 @@ This part is all written for you. You don't have to change anything here.
 
 Grab the template file: [twittercloud.py](https://github.com/INFO490/assignments/blob/master/hw5/FirstName-LastName-twittercloud.py)
 
-I got the idea for this problem while I was talking to Ola from our class and she mentioned [infographics](http://en.wikipedia.org/wiki/Infographic). So if this assignment turns out to be too difficult, you can blame her (thanks, Ola!). Don't worry, because the bulk of the code is already written and provided for you, and you only have to write two functions (`clean_statuses()` and `get_counts()`). We will begin with a trending topic, fetch some tweets, and create a [tag cloud](http://en.wikipedia.org/wiki/Tag_cloud) such as this one created by searching for __#informatics__ (I think I see Champaign in there):
+I got the idea for this problem while I was talking to Ola from our class and she mentioned [infographics](http://en.wikipedia.org/wiki/Infographic). So if this assignment turns out to be too difficult, you can blame her (thanks, Ola!). Don't worry, because the bulk of the code is already written and provided for you, and you only have to write two functions (`clean_statuses()` and `get_counts()`). We will begin with a trending topic, fetch some tweets, and create a [tag cloud](http://en.wikipedia.org/wiki/Tag_cloud) such as this one created by searching for __#informatics__ (I think I see Champaign in there),
 
 ![cloud](cloud.png)
 
@@ -114,7 +114,7 @@ The rest of the `main()` function is already written for you, and you don't have
 
 Next, note that there is a function named `search_twitter()`. It is a slight modification of the trending topics search routine of Example 1-5 in the book,
 
-    search_twitter(twitter_api, q, search_size = 100, stop_count = 10000)
+    search_twitter(twitter_api, q, search_size = 100, stop_count = 1000)
 
 where `twitter_api` is the `twitter.api.Twitter` object, and `q` is the query string. You don't have to change anything in this function.
 
