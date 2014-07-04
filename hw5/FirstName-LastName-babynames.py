@@ -80,13 +80,15 @@ class BabyNames():
 if __name__ == '__main__':
 
     # create a class BabyNames for 2013 Illinois
-    b = BabyNames(state = 'IL', year = '2013')
+    my_state = 'IL'
+    my_year = '2013'
+    b = BabyNames(state = my_state, year = my_year)
     # fetch the HTML page
     p = b.get_page()
     # parse the HTML page, data is a dictionary
     d = b.parse_page(p)
     # print top 5 names
-    print('Top 5 baby names for %s, %s' % (state, year))
+    print('Top 5 baby names for %s, %s' % (my_state, my_year))
     print('Females: ' + ', '.join('{}({})'.format(
           d[u'female_name'][i], d[u'number_of_females'][i]) for i in xrange(5)))
     print('Males: ' + ', '.join('{}({})'.format(
