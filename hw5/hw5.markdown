@@ -27,7 +27,7 @@ We will create a class named `BabyNames`, which must have at minimum the followi
 
 The `__main__` part is already written for you. You don't have to change anything here. Study this first to get the big picture. We create our object, fetch the HTML page, parse it, then display the top 5 baby names to make sure that we got it right.
 
-	Top 5 baby names
+	Top 5 baby names for IL, 2013
 	Females: Olivia(881), Sophia(851), Emma(786), Isabella(671), Emily(558)
 	Males: Noah(757), Alexander(728), Jacob(728), Liam(722), Michael(695)
 
