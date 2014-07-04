@@ -8,6 +8,8 @@ from __future__ import print_function
 import re
 import twitter
 import pandas as pd
+import os
+import pickle
 from pytagcloud import create_tag_image, make_tags
 
 def search_twitter(twitter_api, q, search_size = 100, stop_count = 1000):
@@ -38,7 +40,7 @@ def search_twitter(twitter_api, q, search_size = 100, stop_count = 1000):
         
         next_results = twitter_api.search.tweets(**kwargs)
         statuses += next_results['statuses']
-        print(len(statuses))
+        print(len(statuses), 'tweets fetched...')
         
     return statuses
 
@@ -58,7 +60,7 @@ def clean_statuses(statuses):
     clean_tweets = []
 
     # your code goes here
-
+    
     return clean_tweets
 
 def get_counts(words):
@@ -77,13 +79,14 @@ def get_counts(words):
     
     return counts
 
+
 def main():
     # XXX: Go to http://dev.twitter.com/apps/new to create an app and get values
     # for these credentials, which you'll need to provide in place of these
     # empty string values that are defined as placeholders.
     # See https://dev.twitter.com/docs/auth/oauth for more information 
     # on Twitter's OAuth implementation.
-    CONSUMER_KEY = '' 
+    CONSUMER_KEY = ''
     CONSUMER_SECRET = ''
     OAUTH_TOKEN = ''
     OAUTH_TOKEN_SECRET = ''
@@ -96,13 +99,22 @@ def main():
     # Search query, try your own.
     q = '#informatics'
 
-    st = search_twitter(twitter_api, q)
-    cs = clean_statuses(st)
-    wc = get_counts(cs)
+    # calling search_twitter too often will lock you out for 1 hour.
+    # we will call search twitter once and save the result in a file.
+    if not os.path.isfile('{0}.p'.format(q)):
+        results = search_twitter(twitter_api, q)
+        pickle.dump(results, open('{0}.p'.format(q), 'wb'))
+
+    # load saved pickle file
+    results = pickle.load(open('{0}.p'.format(q), 'rb'))
+    # clean the tweets and extract the words we want
+    clean_tweets = clean_statuses(results)
+    # calculate the frequency of each word
+    word_count = get_counts(clean_tweets)
 
     # use PyTagCloud to create a tag cloud
+    tags  = make_tags(word_count, maxsize = 120)
     # the image is store in 'cloud.png'
-    tags  = make_tags(wc, maxsize = 120)
     create_tag_image(tags, 'cloud.png', size = (900, 600), fontname = 'Lobster')
     
 if __name__ == '__main__':
