@@ -124,7 +124,7 @@ where `twitter_api` is the `twitter.api.Twitter` object, and `q` is the query st
 
 #### Function: clean_statuses()
 
-If you read the book, you know that `statuses` returned the `search_twitter()` function is a list of dictionaries that contains all the metadata from every tweets we fetched. We need to extract only the text data. And we also need to clean up the texts since many of them contain non-alphabetical characters as well as special characters such as hashtags and @ signs, and HTTP links. Thus,
+If you read the book, you know that `statuses` returned from `search_twitter()` function is a list of dictionaries that contains all the metadata from every tweets we fetched. We need to extract only the text data. We also need to clean up the texts since many of them contain non-alphabetical characters as well as special characters such as hashtags and @ signs, and HTTP links. Thus,
 
 - Write a function named `clean_statuses()` that takes a list of dictionaries containing tweet metadata as an argument, and returns a list of strings.
 
@@ -179,7 +179,7 @@ However, our third-party library _PyTagCloud_ needs a list of tuples of the form
 
 #### Back to main()
 
-Now, we are finally ready to use the third-party library _pytagcloud_ to create a tag cloud. I'll call the object returned from the `get_counts()` function `word_counts`.
+Now, we are finally ready to use the third-party library _PyTagCloud_ to create a tag cloud. I'll call the object returned from the `get_counts()` function `word_counts`.
 
     tags = make_tags(word_counts, maxsize = 120)
     create_tag_image(tags, 'cloud.png', size = (900, 600), fontname = 'Lobster')
