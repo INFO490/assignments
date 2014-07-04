@@ -12,7 +12,7 @@ class OnePerson:
     Represents a row(one person) from the census file.
 
     Attributes:
-      row(int): the row number in the data file
+      row (list of strings): stores a row representing one person as a list of strings.
 
     Methods:
       read_line(self, input_file, n)
