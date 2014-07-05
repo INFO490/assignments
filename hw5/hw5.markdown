@@ -25,7 +25,7 @@ We will create a class named `BabyNames`, which must have at minimum the followi
 
 #### main
 
-The `__main__` part is already written for you. You don't have to change anything here. Study this first to get the big picture. We create our object, fetch the HTML page, parse it, then display the top 5 baby names to make sure that we got it right.
+The `__main__` part is already written for you. You don't have to change anything here. Study this first to get the big picture. We create our object, fetch the HTML page, parse it, then display the top 5 baby names to make sure that we got them right. If your code runs successfully, you will see this:
 
 	Top 5 baby names for IL, 2013
 	Females: Olivia(881), Sophia(851), Emma(786), Isabella(671), Emily(558)
@@ -110,7 +110,7 @@ You should also install [PyTagCloud](https://pypi.python.org/pypi/pytagcloud) by
 
 #### Function: main()
 
-After installing the required packages, open up the template and take a look at the `main()` function. You have to get Twitter OAuth credientials and obtain API access at [https://dev.twitter.com/apps](https://dev.twitter.com/apps) as detailed in Chapter 1 of _Mining the Social Web 2nd Edition_ by Matthew A. Russell (hereafter refered to as simply the book), and fill in your OAuth credentials in place of the empty strings.
+After installing the required packages, open up the template and take a look at the `main()` function. You have to get Twitter OAuth credentials and obtain API access at [https://dev.twitter.com/apps](https://dev.twitter.com/apps) as detailed in Chapter 1 of _Mining the Social Web 2nd Edition_ by Matthew A. Russell (hereafter referred to as simply the book), and fill in your OAuth credentials in place of the empty strings.
 
 The rest of the `main()` function is already written for you, and you don't have to do anything here, although I encourage you to spend some time to understand the big picture.
 
@@ -159,7 +159,7 @@ Finally,
 
 - Return the list of cleaned-up words.
 
-If you are confused about anything, you can simply google e.g. "python convert string to lowercases" or ask us questions.
+If you are confused about anything, you can simply google e.g. "python convert string to lowercase" or ask us questions.
 
 #### Function: get_counts()
 
