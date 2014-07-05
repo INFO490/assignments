@@ -15,8 +15,8 @@ Before you begin, install [Requests](http://docs.python-requests.org/en/latest/)
 We will create a class named `BabyNames`, which must have at minimum the following:
 
 - Attributes:
- <p><code>state</code>(unicode): Two-letter abbreviation of state,</p>
- <p><code>year</code>(unicode): Year from 1960 to 2013,</p>
+ <p><code>state</code>(str): Two-letter abbreviation of state,</p>
+ <p><code>year</code>(str): Year from 1960 to 2013,</p>
  <p><code>fields</code>(list of unicode strings): Headers of the table.</p>
 
 - Methods:
@@ -128,7 +128,7 @@ If you read the book, you know that `statuses` returned from `search_twitter()` 
 
 - Write a function named `clean_statuses()` that takes a list of dictionaries containing tweet metadata as an argument, and returns a list of strings.
 
-The argument `statuses` is a list of dictionaries, so the texts we need are in the `statuses[0]['text']`, `statuses[1]['text']`, etc. We can extract the texts and make a list named `status_texts` by writing
+The argument `statuses` is a list of dictionaries, so the texts we need are in `statuses[0]['text']`, `statuses[1]['text']`, etc. We can extract the texts and make a list named `status_texts` by writing
 
     status_texts = [status['text'] for status in statuses]
 
@@ -169,7 +169,7 @@ However, our third-party library _PyTagCloud_ needs a list of tuples of the form
 
 - Create a [pandas.Series](http://pandas.pydata.org/pandas-docs/dev/generated/pandas.Series.html) object from a list of a list of strings `words`.
 
-- Use the `pandas.Series.values_count()` to calculate the frequency of each word. I'll call this returned object `counts`.
+- Use `pandas.Series.values_count()` to calculate the frequency of each word. I'll call this returned object `counts`.
 
 - To create a list of tuples from `counts`, you can use
 
