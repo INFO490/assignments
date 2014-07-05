@@ -41,7 +41,7 @@ In the `get_page()` method, refer to [More Complicated POST requests](http://doc
 
 - Use `requests.post()` to make an HTTP request. Pass `query` to the `data` argument. Return `r.text`.
 
-#### Function: parse_page()
+#### Function: parse_page()n
 
 For the function `parse_page()`, we need to first understand how the HTML page you want to parse is structured. In Chrome, I right-clicked on the web page and selected "Inspect Element" from the pop-up menu.
 
@@ -151,15 +151,23 @@ and remove all words that contain the following:
 
 The easiest way to do this (that I can think of) is substituting any word that matches the above patterns with empty strings `''` (using regular expressions, or regex for short), and at the end, using list comprehension to remove all the empty strings from the list.
 
-At this point, it might be a good idea to
+At this point, you should
 
 - Convert everything to lower cases.
 
-Finally,
+and finally,
 
 - Return the list of cleaned-up words.
 
-If you are confused about anything, you can simply google e.g. "python convert string to lowercase" or ask us questions.
+Here is an example of how all this works. After extracting only the texts from the metadata and converting them to ASCII strings, `status_texts` will be a list of about 1000 strings. But to keep this example short, let's say our `status_texts` was a list of these three strings,
+
+	['Keeping track of agricultural data presents special problems for #informatics systems - http://t.co/oYMC7pvylY', 'Apply by July 7 for NLMs biomedical #informatics course (Sept. 14-20). Its free, too. Details: http://t.co/FVfTXx4QBa', 'RT @rebrandtoday: #startup MEDongle .com-#secure #medical #Record #storage and access.#medicaltech #dongle #healthcare #informatics #VC #ve']
+
+At the end, we want to clean this up and return a list of
+
+	['keeping', 'track', 'of', 'agricultural', 'data', 'presents', 'special', 'problems', 'for', 'systems', 'apply', 'by', 'july', 'for', 'nlms', 'biomedical', 'course', 'sept', 'its', 'free', 'too', 'details', 'rt', 'medongle', 'com', 'and', 'access']
+
+Note that words that had #'s, @'s, numbers, or links in them are all gone now, and we have a list of nicely looking words. If you are confused about how to do some of the operations, you can simply google e.g. "python convert string to lowercase" or ask us questions.
 
 #### Function: get_counts()
 
