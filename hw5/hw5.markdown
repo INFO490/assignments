@@ -15,8 +15,8 @@ Before you begin, install [Requests](http://docs.python-requests.org/en/latest/)
 We will create a class named `BabyNames`, which must have at minimum the following:
 
 - Attributes:
- <p><code>state</code>(str): Two-letter abbreviation of state,</p>
- <p><code>year</code>(str): Year from 1960 to 2013,</p>
+ <p><code>state</code>(unicode string): Two-letter abbreviation of state,</p>
+ <p><code>year</code>(unicode string): Year from 1960 to 2013,</p>
  <p><code>fields</code>(list of unicode strings): Headers of the table.</p>
 
 - Methods:
@@ -94,11 +94,11 @@ This part is all written for you. You don't have to change anything here.
 
 Grab the template file: [twittercloud.py](https://github.com/INFO490/assignments/blob/master/hw5/FirstName-LastName-twittercloud.py)
 
-I got the idea for this problem while I was talking to Ola from our class and she mentioned [infographics](http://en.wikipedia.org/wiki/Infographic). So if this assignment turns out to be too difficult, you can blame her (thanks, Ola!). Don't worry, because the bulk of the code is already written and provided for you, and you only have to write two functions (`clean_statuses()` and `get_counts()`). We will begin with a trending topic, fetch some tweets, and create a [tag cloud](http://en.wikipedia.org/wiki/Tag_cloud) such as this one created by searching for __#informatics__ (I think I see Champaign in there),
+I got the idea for this problem while I was talking to Ola from our class and she mentioned [infographics](http://en.wikipedia.org/wiki/Infographic). So if this assignment turns out to be too difficult, you can blame her (thanks, Ola!). Don't worry, because the bulk of the code is already written and provided for you, and you only have to write two functions, `clean_statuses()` and `get_counts()`. We will begin with a trending topic, fetch some tweets, and create a [tag cloud](http://en.wikipedia.org/wiki/Tag_cloud) such as this one created by searching for __#informatics__ (I think I see Champaign in there),
 
 ![cloud](cloud.png)
 
-Before you begin, you need to install some third-party libraries. You might have had some trouble with `python-twitter` package in the apt-get repository. Uninstall this and use `pip install` instead:
+Before we begin, you need to install some third-party libraries. You might have had some trouble with `python-twitter` package in the apt-get repository. Uninstall this and use `pip install` instead:
 
     $ sudo apt-get purge python-twitter
     $ sudo pip install twitter
@@ -110,7 +110,7 @@ You should also install [PyTagCloud](https://pypi.python.org/pypi/pytagcloud) by
 
 #### Function: main()
 
-After installing the required packages, open up the template and take a look at the `main()` function. You have to get Twitter OAuth credientials and get API access at [https://dev.twitter.com/apps](https://dev.twitter.com/apps) as detailed in Chapter 1 of _Mining the Social Web 2nd Edition_ by Matthew A. Russell (hereafter refered to as simply the book), and fill in your OAuth credentials in place of the empty strings.
+After installing the required packages, open up the template and take a look at the `main()` function. You have to get Twitter OAuth credientials and obtain API access at [https://dev.twitter.com/apps](https://dev.twitter.com/apps) as detailed in Chapter 1 of _Mining the Social Web 2nd Edition_ by Matthew A. Russell (hereafter refered to as simply the book), and fill in your OAuth credentials in place of the empty strings.
 
 The rest of the `main()` function is already written for you, and you don't have to do anything here, although I encourage you to spend some time to understand the big picture.
 
@@ -132,7 +132,7 @@ The argument `statuses` is a list of dictionaries, so the texts we need are in `
 
     status_texts = [status['text'] for status in statuses]
 
-These texts will be UNICODE strings, and if you are using Python 2, you have to convert them to ASCII strings. You can do this by
+These texts will be Unicode strings, and if you are using Python 2, you have to convert them to ASCII strings. You can do this by
 
     status_texts = [text.encode('ascii', 'ignore') for text in status_texts]
 
@@ -153,7 +153,7 @@ The easiest way to do this (that I can think of) is substituting any word that m
 
 At this point, it might be a good idea to
 
-- Convert everything to lower cases (this will make the tag cloud prettier in my opinion).
+- Convert everything to lower cases.
 
 Finally,
 
@@ -163,9 +163,7 @@ If you are confused about anything, you can simply google e.g. "python convert s
 
 #### Function: get_counts()
 
-Now, returned from the `clean_statuses()` function is a list of nicely cleaned-up lowercase words. To create a tag cloud, we need the frequency of each word, because the size of each word in the tag cloud is determined by the frequency of the word.
-
-However, our third-party library _PyTagCloud_ needs a list of tuples of the form (word, frequency) in order to create a tag cloud. Thus, we will write a function named `get_counts()` to calculate the frequency of each word and return a list of tuple of the form (string, int). Using Pandas makes the job easy, so
+Now, returned from the `clean_statuses()` function is a list of nicely cleaned-up lowercase words. To create a tag cloud, we need the frequency of each word, because the size of each word in the tag cloud is determined by the frequency of the word. Our third-party library _PyTagCloud_ needs a list of tuples of the form (word, frequency) in order to create a tag cloud. Thus, we will write a function named `get_counts()` to calculate the frequency of each word and return a list of tuple of the form (string, int). Using Pandas makes the job easy, so
 
 - Create a [pandas.Series](http://pandas.pydata.org/pandas-docs/dev/generated/pandas.Series.html) object from a list of a list of strings `words`.
 
@@ -179,12 +177,12 @@ However, our third-party library _PyTagCloud_ needs a list of tuples of the form
 
 #### Back to main()
 
-Now, we are finally ready to use the third-party library _PyTagCloud_ to create a tag cloud. I'll call the object returned from the `get_counts()` function `word_counts`.
+If you have successfully written the two previous function, we are finally ready to use the third-party library _PyTagCloud_ to create a tag cloud. I'll call the object returned from the `get_counts()` function `word_counts`.
 
     tags = make_tags(word_counts, maxsize = 120)
     create_tag_image(tags, 'cloud.png', size = (900, 600), fontname = 'Lobster')
 
-This will create the tag cloud in the file `cloud.png`. Open it up,
+These are already written in the `main()` function and will create the tag cloud in the file `cloud.png`. If your code runs without an error, open up the image by doing
 
     $ xdg-open cloud.png
 

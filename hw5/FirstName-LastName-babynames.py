@@ -18,9 +18,9 @@ class BabyNames():
     on Social Security website.
 
     Attributes:
-      state(str): Two-letter abbreviation of state.
-      year(str): Year from 1960 to 2013.
-      fields(list): Headers of the table.
+      state(unicode): Two-letter abbreviation of state.
+      year(unicode): Year from 1960 to 2013.
+      fields(list of unicodes): Headers of the table.
 
     Methods:
        get_page(self): fetches the HTML page and returns a unicode string.
@@ -80,8 +80,8 @@ class BabyNames():
 if __name__ == '__main__':
 
     # create a class BabyNames for 2013 Illinois
-    my_state = 'IL'
-    my_year = '2013'
+    my_state = u'IL'
+    my_year = u'2013'
     b = BabyNames(state = my_state, year = my_year)
     # fetch the HTML page
     p = b.get_page()
