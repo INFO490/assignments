@@ -14,6 +14,12 @@ Refer to Week 1 Lesson 3 on how to use Git.
 
 3. [Week 3 Assignment](https://github.com/INFO490/assignments/tree/master/hw3)
 
- - Problem 1. Simple statistics revisted.
+ - Problem 1. Simple statistics revisited.
  - Problem 2. Using a class to represent an individual person.
  - Problem 3. Simple statistics using Numpy.
+
+4. [Week 4 Assignment](https://github.com/INFO490/assignments/tree/master/hw4)
+
+ - Problem 1. Trigonometric functions. 
+ - Problem 2. Income versus age.
+ - Problem 3. Age distribution of males and females.
