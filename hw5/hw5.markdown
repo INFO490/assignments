@@ -11,7 +11,7 @@ In this problem, we will use Beautiful Soup to parse the [HTML page](http://www.
 Before you begin, install [Requests](http://docs.python-requests.org/en/latest/):
 
     $ sudo apt-get install python-requests
-
+n
 We will create a class named `BabyNames`, which must have at minimum the following:
 
 - Attributes:
@@ -41,7 +41,7 @@ In the `get_page()` method, refer to [More Complicated POST requests](http://doc
 
 - Use `requests.post()` to make an HTTP request. Pass `query` to the `data` argument. Return `r.text`.
 
-#### Function: parse_page()n
+#### Function: parse_page()
 
 For the function `parse_page()`, we need to first understand how the HTML page you want to parse is structured. In Chrome, I right-clicked on the web page and selected "Inspect Element" from the pop-up menu.
 
@@ -53,7 +53,7 @@ Your browser should have a similar method that shows the HTML source. Note in th
 
 Note that all strings in this problem will be unicode strings (Python type `unicode`). Since parsing the HTML source gives us unicode strings, it is easier to make everything unicode including the dictionary keys.
 
-Study the examples in the template. When you use one of the elements in the `self.field` attribute as a dictionary key, you should get the corresponding column in the table. (I hope this is intuitive and makes sense.)
+Study the examples in the docstring. When you use one of the elements in the `self.field` attribute as a dictionary key, you should get the corresponding column in the table. (I hope this is intuitive and makes sense.)
 
 #### Submission Instructions
 
@@ -72,7 +72,7 @@ In the previous weeks, we have seen different ways to read selected columns from
 First, write a function named `read_census()` that takes the filename (string) as an argument and returns pandas.DataFrame.
 
 - Use the [read_csv](http://pandas.pydata.org/pandas-docs/stable/io.html#io-read-csv-table) function in Pandas.
-- Don't forget that "MARHT" and "WKHP" had empty fields, which should actually be zero. When you first create a DataFrame from the census data, you will notice that these empty fields are filled with NaN (Not a Number). Use [pandas.DataFrame.fillna()](http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.fillna.html) to replace NaN with 0s.
+- Don't forget that "MARHT" and "WKHP" had empty fields, which should actually be zero. When you first create a DataFrame from the census data, you will notice that these empty fields are filled with NaN (Not a Number). Use [pandas.DataFrame.fillna()](http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.fillna.html) to replace NaN's with 0's.
 
 #### Function: get_stats()
 
@@ -171,7 +171,15 @@ Note that words that had #'s, @'s, numbers, or links in them are all gone now, a
 
 #### Function: get_counts()
 
-Now, returned from the `clean_statuses()` function is a list of nicely cleaned-up lowercase words. To create a tag cloud, we need the frequency of each word, because the size of each word in the tag cloud is determined by the frequency of the word. Our third-party library _PyTagCloud_ needs a list of tuples of the form (word, frequency) in order to create a tag cloud. Thus, we will write a function named `get_counts()` to calculate the frequency of each word and return a list of tuple of the form (string, int). Using Pandas makes the job easy, so
+Now, returned from the `clean_statuses()` function is a list of nicely cleaned-up lowercase words. To create a tag cloud, we need the frequency of each word, because the size of each word in the tag cloud is determined by the frequency of the word. Our third-party library _PyTagCloud_ needs a list of tuples of the form (word, frequency) in order to create a tag cloud. Thus, we will write a function named `get_counts()` to calculate the frequency of each word and return a list of tuple of the form (string, int). For example, if we had a list such as the follwowing
+
+    word = ['info', 'matics', 'info', 'matics', 'info', 'informatics']
+
+the `get_counts()` function should return a list of tuples
+
+    [('info', 3), ('matics', 2), ('informatics', 1)]
+
+Using Pandas makes the job easy, so
 
 - Create a [pandas.Series](http://pandas.pydata.org/pandas-docs/dev/generated/pandas.Series.html) object from a list of a list of strings `words`.
 
