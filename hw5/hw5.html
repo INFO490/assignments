@@ -1,0 +1,253 @@
+<h2>Week 5 Assignment</h2>
+
+<h3>Problem 1. Popular Baby Names</h3>
+
+<h4>Introduction</h4>
+
+<p>Grab the template file: <a href="https://github.com/INFO490/assignments/blob/master/hw5/FirstName-LastName-babynames.py">babynames.py</a></p>
+
+<p>In this problem, we will use Beautiful Soup to parse the <a href="http://www.ssa.gov/cgi-bin/namesbystate.cgi">HTML page</a> for the most frequent baby names in 2013 in Illinois based on Social Security card application data.</p>
+
+<p>Before you begin, install <a href="http://docs.python-requests.org/en/latest/">Requests</a>:</p>
+
+<pre><code>$ sudo apt-get install python-requests
+</code></pre>
+
+<p>n
+We will create a class named <code>BabyNames</code>, which must have at minimum the following:</p>
+
+<ul>
+<li><p>Attributes:</p>
+
+<p><code>state</code>(unicode string): Two-letter abbreviation of state,</p>
+
+<p><code>year</code>(unicode string): Year from 1960 to 2013,</p>
+
+<p><code>fields</code>(list of unicode strings): Headers of the table.</p></li>
+<li><p>Methods:</p>
+
+<p><code>get_page(self)</code>: Fetches the HTML page on SSA using Requests. Takes no argument and returns a string (unicode),</p>
+
+<p><code>parse_page(self, page)</code>: Uses Beautiful Soup to parse an HTML page fetched with get_page() method. Takes a unicode string of concatenated HTML and returns a dictionary of the form {fields: [column values]}.</p></li>
+</ul>
+
+<h4>main</h4>
+
+<p>The <code>__main__</code> part is already written for you. You don't have to change anything here. Study this first to get the big picture. We create our object, fetch the HTML page, parse it, then display the top 5 baby names to make sure that we got them right. If your code runs successfully, you will see this:</p>
+
+<pre><code>Top 5 baby names for IL, 2013
+Females: Olivia(881), Sophia(851), Emma(786), Isabella(671), Emily(558)
+Males: Noah(757), Alexander(728), Jacob(728), Liam(722), Michael(695)
+</code></pre>
+
+<h4>Constructor</h4>
+
+<p>The <code>fields</code> attribute is already defined for you. There are two more attributes: <code>state</code> and <code>year</code>. Initialize them.</p>
+
+<h4>Function: get_page()</h4>
+
+<p>In the <code>get_page()</code> method, refer to <a href="http://docs.python-requests.org/en/latest/user/quickstart/#more-complicated-post-requests">More Complicated POST requests</a> and</p>
+
+<ul>
+<li>Use <code>requests.post()</code> to make an HTTP request. Pass <code>query</code> to the <code>data</code> argument. Return <code>r.text</code>.</li>
+</ul>
+
+<h4>Function: parse_page()</h4>
+
+<p>For the function <code>parse_page()</code>, we need to first understand how the HTML page you want to parse is structured. In Chrome, I right-clicked on the web page and selected "Inspect Element" from the pop-up menu.</p>
+
+<p><img src="babynames.png" alt="inspect_element" title="" /></p>
+
+<p>Your browser should have a similar method that shows the HTML source. Note in the figure that a row is surrounded by <code>&lt;tr align="right"&gt;...&lt;/tr&gt;</code> and each column within that row is surrounded by <code>&lt;td&gt;...&lt;/td&gt;</code> or <code>&lt;td align="center"&gt;...&lt;/td&gt;</code>.</p>
+
+<ul>
+<li>Use the <a href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/#find-all">find_all()</a> function to parse the HTML page and extract the columns <code>rank</code>, <code>male_name</code>, <code>number_of_males</code>, <code>female_name</code>, and <code>number_of_females</code>.</li>
+</ul>
+
+<p>Note that all strings in this problem will be unicode strings (Python type <code>unicode</code>). Since parsing the HTML source gives us unicode strings, it is easier to make everything unicode including the dictionary keys.</p>
+
+<p>Study the examples in the docstring. When you use one of the elements in the <code>self.field</code> attribute as a dictionary key, you should get the corresponding column in the table. (I hope this is intuitive and makes sense.)</p>
+
+<h4>Submission Instructions</h4>
+
+<ul>
+<li>Rename your file to <code>&lt;firstname&gt;-&lt;lastname&gt;-babynames.py</code> and upload it to Moodle.</li>
+</ul>
+
+<h3>Problem 2. Simple Statistics Using Pandas.</h3>
+
+<h4>Introduction</h4>
+
+<p>Grab the template file: <a href="https://github.com/INFO490/assignments/blob/master/hw5/FirstName-LastName-pdstats.py">pdstats.py</a></p>
+
+<p>In the previous weeks, we have seen different ways to read selected columns from the census CSV file and calculate basic statistics. In this problem, we will see how easy it is to perform the same task using Pandas. Remember, the purpose of this problem is to let you experience how easy it is to make a data table using Pandas. Don't overthink it.</p>
+
+<h4>Function: read_census()</h4>
+
+<p>First, write a function named <code>read_census()</code> that takes the filename (string) as an argument and returns pandas.DataFrame.</p>
+
+<ul>
+<li>Use the <a href="http://pandas.pydata.org/pandas-docs/stable/io.html#io-read-csv-table">read_csv</a> function in Pandas.</li>
+<li>Don't forget that "MARHT" and "WKHP" had empty fields, which should actually be zero. When you first create a DataFrame from the census data, you will notice that these empty fields are filled with NaN (Not a Number). Use <a href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.fillna.html">pandas.DataFrame.fillna()</a> to replace NaN's with 0's.</li>
+</ul>
+
+<h4>Function: get_stats()</h4>
+
+<p>Next, write a function named <code>get_stats()</code> that takes a Pandas DataFrame as the first argument and the column key (str) as the second argument, and returns a tuple of minimum, maximum, mean, and median.</p>
+
+<ul>
+<li>Use <a href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.min.html">pandas.DataFrame.min()</a>, <a href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.max.html">pandas.DataFrame.max()</a>, <a href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.mean.html">pandas.DataFrame.mean()</a>, and <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.median.html">pandas.DataFrame.median()</a></li>
+</ul>
+
+<h4>main</h4>
+
+<p>This part is all written for you. You don't have to change anything here.</p>
+
+<h4>Submission instructions</h4>
+
+<ul>
+<li>Rename your file to <code>&lt;firstname&gt;-&lt;lastname&gt;-pdstats.py</code> and upload it to Moodle.</li>
+</ul>
+
+<h3>Problem 3. Twitter Tag Cloud.</h3>
+
+<h4>Introduction</h4>
+
+<p>Grab the template file: <a href="https://github.com/INFO490/assignments/blob/master/hw5/FirstName-LastName-twittercloud.py">twittercloud.py</a></p>
+
+<p>I got the idea for this problem while I was talking to Ola from our class and she mentioned <a href="http://en.wikipedia.org/wiki/Infographic">infographics</a>. So if this assignment turns out to be too difficult, you can blame her (thanks, Ola!). Don't worry, because the bulk of the code is already written and provided for you, and you only have to write two functions, <code>clean_statuses()</code> and <code>get_counts()</code>. We will begin with a trending topic, fetch some tweets, and create a <a href="http://en.wikipedia.org/wiki/Tag_cloud">tag cloud</a> such as this one created by searching for <strong>#informatics</strong> (I think I see Champaign in there),</p>
+
+<p><img src="cloud.png" alt="cloud" title="" /></p>
+
+<p>Before we begin, you need to install some third-party libraries. You might have had some trouble with <code>python-twitter</code> package in the apt-get repository. Uninstall this and use <code>pip install</code> instead:</p>
+
+<pre><code>$ sudo apt-get purge python-twitter
+$ sudo pip install twitter
+</code></pre>
+
+<p>You should also install <a href="https://pypi.python.org/pypi/pytagcloud">PyTagCloud</a> by doing:</p>
+
+<pre><code>$ sudo apt-get install python-pygame python-simplejson
+$ sudo pip install pytagcloud
+</code></pre>
+
+<h4>Function: main()</h4>
+
+<p>After installing the required packages, open up the template and take a look at the <code>main()</code> function. You have to get Twitter OAuth credentials and obtain API access at <a href="https://dev.twitter.com/apps">https://dev.twitter.com/apps</a> as detailed in Chapter 1 of <em>Mining the Social Web 2nd Edition</em> by Matthew A. Russell (hereafter referred to as simply the book), and fill in your OAuth credentials in place of the empty strings.</p>
+
+<p>The rest of the <code>main()</code> function is already written for you, and you don't have to do anything here, although I encourage you to spend some time to understand the big picture.</p>
+
+<h4>Function: search_twitter()</h4>
+
+<p>Next, note that there is a function named <code>search_twitter()</code>. It is a slight modification of the trending topics search routine of Example 1-5 in the book,</p>
+
+<pre><code>search_twitter(twitter_api, q, search_size = 100, stop_count = 1000)
+</code></pre>
+
+<p>where <code>twitter_api</code> is the <code>twitter.api.Twitter</code> object, and <code>q</code> is the query string. You don't have to change anything in this function.</p>
+
+<h4>Function: clean_statuses()</h4>
+
+<p>If you read the book, you know that <code>statuses</code> returned from <code>search_twitter()</code> function is a list of dictionaries that contains all the metadata from every tweets we fetched. We need to extract only the text data. We also need to clean up the texts since many of them contain non-alphabetical characters as well as special characters such as hashtags and @ signs, and HTTP links. Thus,</p>
+
+<ul>
+<li>Write a function named <code>clean_statuses()</code> that takes a list of dictionaries containing tweet metadata as an argument, and returns a list of strings.</li>
+</ul>
+
+<p>The argument <code>statuses</code> is a list of dictionaries, so the texts we need are in <code>statuses[0]['text']</code>, <code>statuses[1]['text']</code>, etc. We can extract the texts and make a list named <code>status_texts</code> by writing</p>
+
+<pre><code>status_texts = [status['text'] for status in statuses]
+</code></pre>
+
+<p>These texts will be Unicode strings, and if you are using Python 2, you have to convert them to ASCII strings. You can do this by</p>
+
+<pre><code>status_texts = [text.encode('ascii', 'ignore') for text in status_texts]
+</code></pre>
+
+<p>If you are not familiar with these syntaxes, these are called <a href="http://lmgtfy.com/?q=python+list+comprehension">list comprehensions</a>. These two lines are already in the template so you don't have to write them again.</p>
+
+<p>Now your job is to write the rest of this function by using <code>re</code> regular expression operations to</p>
+
+<ul>
+<li>Split the text into words (words in a text are separated by whitespaces),</li>
+</ul>
+
+<p>and remove all words that contain the following:</p>
+
+<ul>
+<li>hashtags (#),</li>
+<li>users (@),</li>
+<li>links (begins with http), and</li>
+<li>any non-alphabetical characters.</li>
+</ul>
+
+<p>The easiest way to do this (that I can think of) is substituting any word that matches the above patterns with empty strings <code>''</code> (using regular expressions, or regex for short), and at the end, using list comprehension to remove all the empty strings from the list.</p>
+
+<p>At this point, you should</p>
+
+<ul>
+<li>Convert everything to lower cases.</li>
+</ul>
+
+<p>and finally,</p>
+
+<ul>
+<li>Return the list of cleaned-up words.</li>
+</ul>
+
+<p>Here is an example of how all this works. After extracting only the texts from the metadata and converting them to ASCII strings, <code>status_texts</code> will be a list of about 1000 strings. But to keep this example short, let's say our <code>status_texts</code> was a list of these three strings,</p>
+
+<pre><code>['Keeping track of agricultural data presents special problems for #informatics systems - http://t.co/oYMC7pvylY', 'Apply by July 7 for NLMs biomedical #informatics course (Sept. 14-20). Its free, too. Details: http://t.co/FVfTXx4QBa', 'RT @rebrandtoday: #startup MEDongle .com-#secure #medical #Record #storage and access.#medicaltech #dongle #healthcare #informatics #VC #ve']
+</code></pre>
+
+<p>At the end, we want to clean this up and return a list of</p>
+
+<pre><code>['keeping', 'track', 'of', 'agricultural', 'data', 'presents', 'special', 'problems', 'for', 'systems', 'apply', 'by', 'july', 'for', 'nlms', 'biomedical', 'course', 'sept', 'its', 'free', 'too', 'details', 'rt', 'medongle', 'com', 'and', 'access']
+</code></pre>
+
+<p>Note that words that had #'s, @'s, numbers, or links in them are all gone now, and we have a list of nicely looking words. If you are confused about how to do some of the operations, you can simply google e.g. "python convert string to lowercase" or ask us questions.</p>
+
+<h4>Function: get_counts()</h4>
+
+<p>Now, returned from the <code>clean_statuses()</code> function is a list of nicely cleaned-up lowercase words. To create a tag cloud, we need the frequency of each word, because the size of each word in the tag cloud is determined by the frequency of the word. Our third-party library <em>PyTagCloud</em> needs a list of tuples of the form (word, frequency) in order to create a tag cloud. Thus, we will write a function named <code>get_counts()</code> to calculate the frequency of each word and return a list of tuple of the form (string, int). For example, if we had a list such as the follwowing</p>
+
+<pre><code>word = ['info', 'matics', 'info', 'matics', 'info', 'informatics']
+</code></pre>
+
+<p>the <code>get_counts()</code> function should return a list of tuples</p>
+
+<pre><code>[('info', 3), ('matics', 2), ('informatics', 1)]
+</code></pre>
+
+<p>Using Pandas makes the job easy, so</p>
+
+<ul>
+<li><p>Create a <a href="http://pandas.pydata.org/pandas-docs/dev/generated/pandas.Series.html">pandas.Series</a> object from a list of a list of strings <code>words</code>.</p></li>
+<li><p>Use <code>pandas.Series.values_count()</code> to calculate the frequency of each word. I'll call this returned object <code>counts</code>.</p></li>
+<li><p>To create a list of tuples from <code>counts</code>, you can use</p>
+
+<pre><code>counts = [item for item in counts.iteritems()]
+</code></pre></li>
+<li><p>Return this list of tuples (string, int).</p></li>
+</ul>
+
+<h4>Back to main()</h4>
+
+<p>If you have successfully written the two previous function, we are finally ready to use the third-party library <em>PyTagCloud</em> to create a tag cloud. I'll call the object returned from the <code>get_counts()</code> function <code>word_counts</code>.</p>
+
+<pre><code>tags = make_tags(word_counts, maxsize = 120)
+create_tag_image(tags, 'cloud.png', size = (900, 600), fontname = 'Lobster')
+</code></pre>
+
+<p>These are already written in the <code>main()</code> function and will create the tag cloud in the file <code>cloud.png</code>. If your code runs without an error, open up the image by doing</p>
+
+<pre><code>$ xdg-open cloud.png
+</code></pre>
+
+<p>and see how pretty it is.</p>
+
+<h4>Submission Instructions</h4>
+
+<ul>
+<li>Rename <code>&lt;firstname&gt;-&lt;lastname&gt;-twittercloud.py</code> and upload it to Moodle.</li>
+</ul>
