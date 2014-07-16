@@ -73,6 +73,8 @@ class BabyNames():
         [u'Olivia', u'Sophia', u'Emma', u'Isabella', u'Emily']
         '''
 
+        dict = {}
+        
         # your code goes here
         
         return data
