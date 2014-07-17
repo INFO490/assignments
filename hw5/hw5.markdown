@@ -101,6 +101,7 @@ I got the idea for this problem while I was talking to Ola from our class and sh
 Before we begin, you need to install some third-party libraries. You might have had some trouble with `python-twitter` package in the apt-get repository. Uninstall this and use `pip install` instead:
 
     $ sudo apt-get purge python-twitter
+    $ sudo apt-get install python-pip
     $ sudo pip install twitter
 
 You should also install [PyTagCloud](https://pypi.python.org/pypi/pytagcloud) by doing:
