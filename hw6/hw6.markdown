@@ -2,24 +2,22 @@
 
 ### Installing SQLite
 
-To install SQLite 3 in Ubuntu, use the following command:
+To install _SQLite 3_ in Ubuntu, use the following command:
 
-$ sudo apt-get install sqlite3
+    $ sudo apt-get install sqlite3
 
 ### Problem 1. SQLite from Command Line
 
-- Grab the template:
-
 #### Overview
 
-In this problem, we will use the SQLite command line tool to perform some simple database tasks. There are two ways to use the SQLite command line tool. You can either simply do
+In this problem, we will use the _SQLite_ command line tool to perform some simple database tasks. There are two ways to use the _SQLite_ command line tool. You can either simply do
 
     $ sqlite3 mydatabase.db
     SQLite version 3.8.5 2014-06-04 14:06:34
     Enter ".help" for usage hints.
     sqlite> 
 
-which brings up the sqlite prompt, where you can interactively enter SQL commands line by line; or you can write an SQL script in text file format (e.g. `census.sql`), and run it from the command line with 
+which brings up an interactive prompt, where you can enter SQL commands line by line; or you can write an SQL script in text file format (e.g. `census.sql`), and run it from the command line with 
 
     $ sqlite3 mydatabase.db < census.sql
 
@@ -27,28 +25,28 @@ You might find it easier to practice and debug using the first option, but for s
 
 #### Creating a new SQL database
 
-Your first task is to create a new SQLite database from the Illinois census file. Although _sqlite_ can import CSV files, some pre-processing is still necessary. We will use the columns "SERIALNO", "SPORDER", "AGEP", "WKHP", and "PINCP". Most of these should be familar to you. "SERIALNO" is a unique serial number that identifies each household and "SPORDER" is an identifier that distinguishes each person in the household. Thus, when we combine these two numbers, we have a unique identifier for every person. This combination will serve as PRIMARY KEY in SQLite. Let's extract these columns and make a CSV file that can easily be imported by SQLite:
+Your first task is to create a new SQLite database from the Illinois census file. Although _SQLite_ can import CSV files, some pre-processing is still necessary. We will use the columns "SERIALNO", "SPORDER", "AGEP", "WKHP", and "PINCP" in _ss12pil.csv_. Most of these should be familar to you. "SERIALNO" is a unique serial number that identifies each household, and "SPORDER" is an identifier that distinguishes each person in the household. Thus, when we combine these two numbers, we have a unique identifier for every person. We will sue this combination will as the PRIMARY KEY in SQLite. Let's extract these columns and make a CSV file that can easily be imported by SQLite:
 
-    $ sed 1d ss12pil.csv | awk -F, '{if($73 == ""){$73 = 0};print $2$3 "," $8 "," $73 "," $104}' > ss12pil_sql.csv
+    $ sed 1d ss12pil.csv | awk -F, '{if($73 == ""){$73 = 0}; if($104 == ""){$104 = 0}; print $2$3 "," $8 "," $73 "," $104}' > ss12pil_sql.csv
 
 Now, in your SQL script, the first thing you should do is
 
-- CREATE a new table named _myCensus_ with four columns.
+- CREATE a new table named _myCensus_ with four columns, *id* (PRIMARY KEY), *age*, *hours_worked*, and *income*.
 
 All columns are integers, and the first column should be PRIMARY KEY.
 
-Next, since _ss12pil.csv_ is still a CSV file, we have to tell SQLite that the file is separated by commans:
+Next, since *ss12pil_sql.csv* is still a CSV file, we have to tell *SQLite* that the file is separated by commans:
 
     sqlite> .separator ,
     sqlite> .import ss12pil_sql.csv myCensus
 
-Note that you have to create a new table __before__ importing a CSV file. Above commands imports the CSV file into the _mycensus_ table.
+Note that you have to create a new table __before__ importing a CSV file. Above commands import the CSV file into a table named *myCensus*.
 
 #### Joining two databases
 
-Grab the CSV file:
+Grab the CSV file: [ss12pil_favorite_number.csv](https://github.com/INFO490/assignments/blob/master/hw6/ss12pil_favorite_number.csv)
 
-You have just finished creating an SQL database from the CSV file, but someone comes along and hands you another CSV file, *ss12pil_favorite_number.csv*. This file was created by going around and asking each person in the _ss12pil.csv_ file what his or her favorite single-digit number is. Note that the rows of the two files are not in the same order, i.e.
+You have just finished creating an SQL database from the CSV file, but someone comes along and hands you another CSV file, *ss12pil_favorite_number.csv*. This file was created by going around and asking each person in the *ss12pil.csv* file what his or her favorite single-digit number is. Note it is not in the same order as the original census file, i.e.
 
     $ head -3 ss12pil_sql.csv 
     3801,50,0,000121000
@@ -59,7 +57,7 @@ You have just finished creating an SQL database from the CSV file, but someone c
     131478101,2
     81532401,2
 
-- Create a new table named _moreCensus_ with two columns. Import *ss12pil_favorite_number.csv*.
+- CREATE a new table named _moreCensus_ with two columns, *id* (PRIMARY KEY) and *fav_num*. Import *ss12pil_favorite_number.csv*.
 
 Now we want to join this newly created database *moreCensus* with the original database *myCensus*.
 
@@ -69,13 +67,22 @@ Now we want to join this newly created database *moreCensus* with the original d
 
 At this point, you decide for some reason that you may as well enter your own information into the database. 
 
-- INSERT a new row into *myMoreCensus*. Assume that your PRIMARY KEY is 101, you are 21 years old, works 40 hours a week, makes one million dollars a year, and your favorite number is 1.
+- INSERT a new row into *myMoreCensus*. Assume that
+ - your PRIMARY KEY is 49001,
+ - you were 21 years old in 2012,
+ - worked 40 hours a week in 2012,
+ - made one million dollars in 2012, and
+ - your favorite number is 1.
 
 #### Query
 
-Finally, do a query to find
+Finally, use
 
-- The number of individuals of 18 years of age or older who worked 40 hours or more per week, earned an annual income of more than $ 500,000, and whose favorite digit is 1.
+- a SELECT statement to find every person
+ - of 18 years of age or older,
+ - who worked 40 hours or more per week,
+ - whose annual income exceeded $500,000, and
+ - whose favorite digit is 1.
 
 The answer should be
 
@@ -85,7 +92,7 @@ The answer should be
     121640701,48,40,607000,1
     133309001,33,45,560000,1
     148470501,51,70,733000,1
-    101,21,40,1000000,1
+    49001,21,40,1000000,1
 
 #### Submission Instructions
 
@@ -97,23 +104,23 @@ Rename your file to `<firstname>-<lastname>-census.sql` and upload it to Moodle.
 
 ### Problem 2. SQLite in Python
 
-- Grab the template:
+- Grab the template: [sqlcensus.py](https://github.com/INFO490/assignments/blob/master/hw6/sqlcensus.py)
 
 #### Overview
 
-In this problem, you will repeat the same task in Problem 1 using the *sqlite3* library in Python. Note that the functions `read_my_census()`, `read_more_census()`, `join_census()`, and `insert_me` take an `sqlite3.Connection` object and return an `sqlite3.Connection` object. The fifth function `find_millionaires()` takes an `sqlite3.Connection` object and returns a `pandas.Dataframe` object.
+In this problem, you will repeat the same task in Problem 1 using the *sqlite3* library in Python. Note that the functions `read_my_census()`, `read_more_census()`, `join_census()`, and `insert_me()` all take an `sqlite3.Connection` object and return an `sqlite3.Connection` object. The fifth function `find_millionaires()` takes an `sqlite3.Connection` object and returns a `pandas.Dataframe` object.
 
 #### Function: read_my_census()
 
-- Use pandas.read_csv() and pandas.to_sql() functions to read the `ss12pil_sql.csv` file and convert it to an SQL database named _myCensus_.
+- Use *pandas.read_csv()* and *pandas.to_sql()* functions to read the *ss12pil_sql.csv* file and convert it to an SQL database named *myCensus*.
 
 #### Function: read_my_census()
 
-- Use pandas.read_csv() and pandas.to_sql() functions to read the `ss12pil_favorite_number.csv` file and convert it to an SQL database named _moreCensus_.
+- Use *pandas.read_csv()* and *pandas.to_sql()* functions to read the *ss12pil_favorite_number.csv* file and convert it to an SQL database named *moreCensus*.
 
 #### Function: join_census()
 
-The `join_census()` function joins _myCensus_ and _moreCensus_ tables into a new table. It is probably easiest to
+The *join_census()* function joins _myCensus_ and _moreCensus_ tables into a new table. It is probably easiest to
 
 - Use the same command from Problem 1 as an argument to the `execute()` method.
 
