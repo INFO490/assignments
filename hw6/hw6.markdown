@@ -31,9 +31,9 @@ Read the directions below at least once __before__ you start writing code to und
 
 There are five major tasks in this problem:
 
-1. CREATE a table named *myCensus*, import *ss12pil_sql.csv*.
-2. CREATE another table *moreCensus*, import *ss12pil_favorite_number.csv*.
-3. JOIN *myCensus* and *moreCensus* by matching the PRIMARY KEY
+1. CREATE a table named *myCensus*, import *ss12pil_sql.csv*,
+2. CREATE another table *moreCensus*, import *ss12pil_favorite_number.csv*,
+3. JOIN *myCensus* and *moreCensus* by matching the PRIMARY KEY,
 4. INSERT a new row in the table,
 5. SELECT query.
 
