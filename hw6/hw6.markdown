@@ -25,7 +25,7 @@ which brings up an interactive prompt, where you can enter SQL commands line by 
 
 You might find it easier to practice and debug using the first option, but for submission, you will have to write an SQL script and make sure that the second method works.
 
-Read the directions below at least once __before__ you start writing code to get the big picture. Browse the template file at least once to get the big picture. If you don't understand something in the code or the directcions, review the lessons, google what you don't understand, or just ask us.
+Read the directions below at least once __before__ you start writing code to understand where we are headed. If you don't understand something in the directcions, review the lessons, google what you don't understand, or just ask us.
 
 There are four major tasks (or five but the first two are basically the same operation) in this problem:
 
@@ -54,7 +54,7 @@ Next, since *ss12pil_sql.csv* is still a CSV file, we have to tell *SQLite* that
 
 Note that you have to create a new table __before__ importing a CSV file. Above commands import the CSV file into a table named *myCensus*.
 
-#### Joining two databases
+#### Joining two tables
 
 Grab the CSV file: [ss12pil_favorite_number.csv](https://github.com/INFO490/assignments/blob/master/hw6/ss12pil_favorite_number.csv)
 
@@ -69,7 +69,7 @@ You have just finished creating a table from the CSV file, but someone comes alo
     131478101,2
     81532401,2
 
-- CREATE a new table named _moreCensus_ with two columns, *id* (PRIMARY KEY) and *fav_num*. Import *ss12pil_favorite_number.csv*.
+- CREATE a new table named _moreCensus_ with two columns, *id* (PRIMARY KEY) and *favorite_number*. Import *ss12pil_favorite_number.csv*.
 
 Now we want to join this newly created table *moreCensus* with the original table *myCensus*.
 
@@ -123,6 +123,16 @@ Rename your file to `<firstname>-<lastname>-census.sql` and upload it to Moodle.
 In this problem, you will repeat the same task in Problem 1 using the *sqlite3* library in Python. Note that the functions *read_my_census()*, *read_more_census()*, *join_census()*, and *insert_me()* all take an *sqlite3.Connection* object as an argument (and return *None*). The fifth function *find_millionaires()* takes an *sqlite3.Connection* object as an argument and returns a *pandas.DataFrame* object.
 
 Before you start, browse the template file and try to see the big picture. Read the directions below at least once before you start writing anything. This problem should not be too hard if you understood Problem 1 because it's a straightforward Python implementation of Problem 1.
+
+You have to write 5 functions:
+
+- read\_my\_census()
+- read\_more\_census()
+- join\_census()
+- insert\_me()
+- find_\millionaires()
+
+These functions are divided up so that each function can be written in one or two lines at most. As the function names suggest, each function corresponds to one SQL operation or a statement.
 
 #### Function: read_my_census()
 
@@ -183,7 +193,7 @@ You have to write 5 functions:
 - insert_person()
 - print_head()
 
-But these functions are divided up so that each function can be written in one or two lines at most (except the *print_head()* function which can be written in 3 or 4 lines).
+These functions are divided up so that each function can be written in one or two lines at most (except the *print_head()* function which can be written in 3 or 4 lines).
 
 Recall that in week 3 assignment you wrote a class named _OnePerson_ that represents a row in the Illinois census file. All you have to do in this problem is modify the sample code (which uses *Point* object) in the above link to use our _OnePerson_ object. Thus, you will need to import _person.py_ module you wrote. If you want to use your own code, you will have to make sure that it is possible to construct the class by passing a list, e.g.
 
@@ -213,7 +223,7 @@ Only this time, you will do this by interacting with an SQL database. As the off
 
 #### Function: main()
 
-Read the *main()* function first to understand the flow of the program.
+Read the *main()* function first to understand the flow of the code. This function is already written and provided for you, so you don't have to change anything here.
 
 #### Function: adapt_person()
 
