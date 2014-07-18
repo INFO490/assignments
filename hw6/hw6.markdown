@@ -39,17 +39,17 @@ There are five major tasks in this problem:
 
 #### Creating a new table
 
-Your first task is to create a table and import the Illinois census data. Although _SQLite_ can import CSV files, some pre-processing is still necessary. We will use the columns *SERIALNO*, *SPORDER*, *AGEP*, *WKHP*, and *PINCP* in _ss12pil.csv_. *AGEP*, *WKHP*, and *PINCP* should be familar to you. *SERIALNO* is a unique serial number that identifies each household, and *SPORDER* is an identifier that distinguishes each person in the household. Thus, when we combine these two numbers, we have a unique identifier for every person. We will use this combination as the PRIMARY KEY in SQLite. Let's extract these columns and make a CSV file that can easily be imported by SQLite:
+Your first task is to create a table and import the Illinois census data. Although _SQLite_ can import CSV files, some pre-processing is still necessary. We will use the columns *SERIALNO*, *SPORDER*, *AGEP*, *WKHP*, and *PINCP* in _ss12pil.csv_. Columns AGEP*, *WKHP*, and *PINCP* should be familar to you. *SERIALNO* is a unique serial number that identifies each household, and *SPORDER* is an identifier that distinguishes each person in the household. Thus, when we combine these two numbers, we have a unique identifier for every person. We will use this combination as the PRIMARY KEY in SQLite. Let's extract these columns and make a CSV file that can easily be imported by SQLite:
 
     $ sed 1d ss12pil.csv | awk -F, '{if($73 == ""){$73 = 0}; if($104 == ""){$104 = 0}; print $2$3 "," $8 "," $73 "," $104}' > ss12pil_sql.csv
 
-Put this file *ss12pil_sql.csv* in the same as the template file. Now, open up the template, and in your SQL script the first thing you should do is
+Put this file *ss12pil_sql.csv* in the same directory as the template file. Now, open up the template, and in your SQL script the first thing you should do is
 
 - CREATE a new table named _myCensus_ with four columns, *id* (PRIMARY KEY), *age*, *hours_worked*, and *income*.
 
 All columns are integers, and the first column (*id*) should be PRIMARY KEY.
 
-Next, since *ss12pil_sql.csv* is still a CSV file, we have to tell *SQLite* that the file is separated by commans as follows.
+Next, since *ss12pil_sql.csv* is still a CSV file, we have to tell *SQLite* that the file is separated by commas as follows.
 
     sqlite> .separator ,
     sqlite> .import ss12pil_sql.csv myCensus
@@ -58,7 +58,7 @@ Note that you have to create a new table __before__ importing a CSV file. Above 
 
 #### Creating another table
 
-Grab the CSV file: [ss12pil_favorite_number.csv](https://github.com/INFO490/assignments/blob/master/hw6/ss12pil_favorite_number.csv)
+Grab the CSV file: [ss12pil\_favorite\_number.csv](https://github.com/INFO490/assignments/blob/master/hw6/ss12pil_favorite_number.csv)
 
 You have just finished creating a table from the , but someone comes along and hands you another CSV file, *ss12pil_favorite_number.csv*. This file was created by going around and asking each person in the *ss12pil.csv* file what his or her favorite single-digit number is. Note it is not in the same order as the original census file, i.e.
 
