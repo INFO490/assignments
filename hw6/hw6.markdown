@@ -130,9 +130,9 @@ You have to write 5 functions:
 - read\_more\_census()
 - join\_census()
 - insert\_me()
-- find_\millionaires()
+- find\_millionaires()
 
-These functions are divided up so that each function can be written in one or two lines at most. As the function names suggest, each function corresponds to one SQL operation or a statement.
+These functions are divided up so that each function can be written in one or two lines at most. As the function names suggest, each function corresponds to one operation or one SQL statement.
 
 #### Function: read_my_census()
 
