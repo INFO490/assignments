@@ -120,7 +120,7 @@ Rename your file to `<firstname>-<lastname>-census.sql` and upload it to Moodle.
 
 #### Overview
 
-In this problem, you will repeat the same task in Problem 1 using the *sqlite3* library in Python. Note that the functions *read_my_census()*, *read_more_census()*, *join_census()*, and *insert_me()* all take an *sqlite3.Connection* object as an argument (and return *None*). The fifth function *find_millionaires()* takes an *sqlite3.Connection* object as an argument and returns a *pandas.DataFrame* object.
+In this problem, you will repeat the same task in Problem 1 using the *sqlite3* library in Python. 
 
 Before you start, browse the template file and try to see the big picture. Read the directions below at least once before you start writing anything. This problem should not be too hard if you understood Problem 1 because it's a straightforward Python implementation of Problem 1.
 
@@ -133,6 +133,8 @@ You have to write 5 functions:
 - find\_millionaires()
 
 These functions are divided up so that each function can be written in one or two lines at most. As the function names suggest, each function corresponds to one operation or one SQL statement.
+
+Note that the functions *read_my_census()*, *read_more_census()*, *join_census()*, and *insert_me()* all take an *sqlite3.Connection* object as an argument (and return *None*). The fifth function *find_millionaires()* takes an *sqlite3.Connection* object as an argument and returns a *pandas.DataFrame* object.
 
 #### Function: read_my_census()
 
