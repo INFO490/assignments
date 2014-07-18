@@ -1,0 +1,320 @@
+<h2>Week 6 assignment</h2>
+
+<p>For up-to-date version of this document, use Git or see <a href="https://github.com/INFO490/assignments/blob/master/hw6/hw6.markdown">week 6 assignment</a> on GitHub.</p>
+
+<h3>Installing SQLite</h3>
+
+<p>To install <em>SQLite 3</em> in Ubuntu, use the following command:</p>
+
+<pre><code>$ sudo apt-get install sqlite3
+</code></pre>
+
+<h3>Problem 1. SQLite from Command Line</h3>
+
+<p>Grab the template: <a href="https://github.com/INFO490/assignments/blob/master/hw6/census.sql">census.sql</a></p>
+
+<h4>Overview</h4>
+
+<p>In this problem, we will use the <em>SQLite</em> command line tool to perform some simple database tasks. There are two ways to use the <em>SQLite</em> command line tool. You can either simply do</p>
+
+<pre><code>$ sqlite3 mydatabase.db
+SQLite version 3.8.5 2014-06-04 14:06:34
+Enter ".help" for usage hints.
+sqlite&gt;
+</code></pre>
+
+<p>which brings up an interactive prompt, where you can enter SQL commands line by line; or you can write an SQL script in text file format (e.g. <code>census.sql</code>), and run it from the command line with </p>
+
+<pre><code>$ sqlite3 mydatabase.db &lt; census.sql
+</code></pre>
+
+<p>You might find it easier to practice and debug using the first option, but for submission, you will have to write an SQL script and make sure that the second method works.</p>
+
+<p>Read the directions below at least once <strong>before</strong> you start writing code to understand where you are headed. If you don't understand something in the directcions, review the lessons, google what you don't understand, or just ask us.</p>
+
+<p>There are five major tasks in this problem:</p>
+
+<ol>
+<li>CREATE a table named <em>myCensus</em>, import <em>ss12pil_sql.csv</em>.</li>
+<li>CREATE another table <em>moreCensus</em>, import <em>ss12pil_favorite_number.csv</em>.</li>
+<li>JOIN <em>myCensus</em> and <em>moreCensus</em> by matching the PRIMARY KEY</li>
+<li>INSERT a new row in the table,</li>
+<li>SELECT query.</li>
+</ol>
+
+<h4>Creating a new table</h4>
+
+<p>Your first task is to create a table and import the Illinois census data. Although <em>SQLite</em> can import CSV files, some pre-processing is still necessary. We will use the columns <em>SERIALNO</em>, <em>SPORDER</em>, <em>AGEP</em>, <em>WKHP</em>, and <em>PINCP</em> in <em>ss12pil.csv</em>. <em>AGEP</em>, <em>WKHP</em>, and <em>PINCP</em> should be familar to you. <em>SERIALNO</em> is a unique serial number that identifies each household, and <em>SPORDER</em> is an identifier that distinguishes each person in the household. Thus, when we combine these two numbers, we have a unique identifier for every person. We will use this combination as the PRIMARY KEY in SQLite. Let's extract these columns and make a CSV file that can easily be imported by SQLite:</p>
+
+<pre><code>$ sed 1d ss12pil.csv | awk -F, '{if($73 == ""){$73 = 0}; if($104 == ""){$104 = 0}; print $2$3 "," $8 "," $73 "," $104}' &gt; ss12pil_sql.csv
+</code></pre>
+
+<p>Put this file <em>ss12pil_sql.csv</em> in the same as the template file. Now, open up the template, and in your SQL script the first thing you should do is</p>
+
+<ul>
+<li>CREATE a new table named <em>myCensus</em> with four columns, <em>id</em> (PRIMARY KEY), <em>age</em>, <em>hours_worked</em>, and <em>income</em>.</li>
+</ul>
+
+<p>All columns are integers, and the first column (<em>id</em>) should be PRIMARY KEY.</p>
+
+<p>Next, since <em>ss12pil_sql.csv</em> is still a CSV file, we have to tell <em>SQLite</em> that the file is separated by commans as follows.</p>
+
+<pre><code>sqlite&gt; .separator ,
+sqlite&gt; .import ss12pil_sql.csv myCensus
+</code></pre>
+
+<p>Note that you have to create a new table <strong>before</strong> importing a CSV file. Above commands import the CSV file into a table named <em>myCensus</em>.</p>
+
+<h4>Creating another table</h4>
+
+<p>Grab the CSV file: <a href="https://github.com/INFO490/assignments/blob/master/hw6/ss12pil_favorite_number.csv">ss12pil<em>favorite</em>number.csv</a></p>
+
+<p>You have just finished creating a table from the , but someone comes along and hands you another CSV file, <em>ss12pil_favorite_number.csv</em>. This file was created by going around and asking each person in the <em>ss12pil.csv</em> file what his or her favorite single-digit number is. Note it is not in the same order as the original census file, i.e.</p>
+
+<pre><code>$ head -3 ss12pil_sql.csv 
+3801,50,0,000121000
+3802,45,40,000027000
+3803,26,40,000020000
+$ head -3 ss12pil_favorite_number.csv 
+50995101,8
+131478101,2
+81532401,2
+</code></pre>
+
+<ul>
+<li>CREATE a new table named <em>moreCensus</em> with two columns, <em>id</em> (PRIMARY KEY) and <em>favorite_number</em>. Import <em>ss12pil_favorite_number.csv</em>.</li>
+</ul>
+
+<h4>Joining tables</h4>
+
+<p>Now we want to join this newly created table <em>moreCensus</em> with the original table <em>myCensus</em>.</p>
+
+<ul>
+<li>JOIN (or INNER JOIN) <em>myCensus</em> and <em>moreCensus</em> by matching PRIMARY KEY. Combine them into a new table <em>myMoreCensus</em>.</li>
+</ul>
+
+<h4>Inserting</h4>
+
+<p>At this point, you decide for some reason that you may as well enter your own information into the table.</p>
+
+<ul>
+<li>INSERT a new row into <em>myMoreCensus</em>. Assume that in 2012
+<ul>
+<li>your PRIMARY KEY is 49001,</li>
+<li>you were 21 years old,</li>
+<li>worked 40 hours a week,</li>
+<li>made one million dollars, and</li>
+<li>your favorite number is 1.</li>
+</ul></li>
+</ul>
+
+<h4>Query</h4>
+
+<p>Finally, use</p>
+
+<ul>
+<li>a SELECT statement to find every person in 2012
+<ul>
+<li>who was 18 years of age or older, and</li>
+<li>who worked 40 hours or more per week, and</li>
+<li>whose annual income exceeded $500,000, and</li>
+<li>whose favorite digit is 1.</li>
+</ul></li>
+</ul>
+
+<p>The answer should be</p>
+
+<pre><code>21504101,58,55,607000,1
+66592402,62,50,540000,1
+93004702,71,72,607000,1
+121640701,48,40,607000,1
+133309001,33,45,560000,1
+148470501,51,70,733000,1
+49001,21,40,1000000,1
+</code></pre>
+
+<h4>Submission Instructions</h4>
+
+<p>Make sure that your SQL script runs without a problem when you do</p>
+
+<pre><code>$ sqlite3 mydatabase.db &lt; census.sql
+</code></pre>
+
+<p>Rename your file to <code>&lt;firstname&gt;-&lt;lastname&gt;-census.sql</code> and upload it to Moodle.</p>
+
+<h3>Problem 2. SQLite in Python</h3>
+
+<ul>
+<li>Grab the template: <a href="https://github.com/INFO490/assignments/blob/master/hw6/sqlcensus.py">sqlcensus.py</a></li>
+</ul>
+
+<h4>Overview</h4>
+
+<p>In this problem, you will repeat the same task in Problem 1 using the <em>sqlite3</em> library in Python. </p>
+
+<p>Before you start, browse the template file and try to see the big picture. Read the directions below at least once before you start writing anything. This problem should not be too hard if you understood Problem 1 because it's a straightforward Python implementation of Problem 1.</p>
+
+<p>You have to write 5 functions:</p>
+
+<ul>
+<li>read_my_census()</li>
+<li>read_more_census()</li>
+<li>join_census()</li>
+<li>insert_me()</li>
+<li>find_millionaires()</li>
+</ul>
+
+<p>These functions are divided up so that each function can be written in one or two lines at most. As the function names suggest, each function corresponds to one operation or one SQL statement.</p>
+
+<p>Note that the functions <em>read_my_census()</em>, <em>read_more_census()</em>, <em>join_census()</em>, and <em>insert_me()</em> all take an <em>sqlite3.Connection</em> object as an argument (and return <em>None</em>). The fifth function <em>find_millionaires()</em> takes an <em>sqlite3.Connection</em> object as an argument and returns a <em>pandas.DataFrame</em> object.</p>
+
+<h4>Function: main()</h4>
+
+<p>The <em>main()</em> function will create a <em>sqlite3.Connection</em> object, call each of above functions in turn, and print out the result. The final result should be</p>
+
+<pre><code>          id  age  hours_worked   income  favorite_number
+0   21504101   58            55   607000                1
+1   66592402   62            50   540000                1
+2   93004702   71            72   607000                1
+3  121640701   48            40   607000                1
+4  133309001   33            45   560000                1
+5  148470501   51            70   733000                1
+6      49001   21            40  1000000                1
+</code></pre>
+
+<h4>Function: read<em>my</em>census()</h4>
+
+<ul>
+<li>Use <em>pandas.read_csv()</em> and <em>pandas.to_sql()</em> functions to read the <em>ss12pil_sql.csv</em> file and convert it to a table named <em>myCensus</em>.</li>
+</ul>
+
+<h4>Function: read<em>my</em>census()</h4>
+
+<ul>
+<li>Use <em>pandas.read_csv()</em> and <em>pandas.to_sql()</em> functions to read the <em>ss12pil_favorite_number.csv</em> file and convert it to a table named <em>moreCensus</em>.</li>
+</ul>
+
+<h4>Function: join_census()</h4>
+
+<p>The <em>join_census()</em> function joins <em>myCensus</em> and <em>moreCensus</em> tables into a new table named <em>myMoreCensus</em>. It is probably easiest to</p>
+
+<ul>
+<li>Use the same command from Problem 1 as an argument to the <em>execute()</em> method.</li>
+</ul>
+
+<h4>Function: insert_me()</h4>
+
+<p>This function inserts a new row into the <em>myMoreCensus</em> table. You should use the same values you used in Problem 1.</p>
+
+<ul>
+<li>Use the same command from Problem 1 as an argument to the <em>execute()</em> method.</li>
+</ul>
+
+<h4>Function: find_millionaires()</h4>
+
+<p>The <em>find_millionaires()</em> function takes an <em>sqlite3.Connection</em> object as an argument and returns a <em>pandas.DataFrame</em> object.</p>
+
+<ul>
+<li>Use <em>pandas.read_sql()</em> method to issue the same query as in Problem 1 and return the result as a <em>pandas.DataFrame</em> object.</li>
+</ul>
+
+<h4>Submission Instructions</h4>
+
+<p>Rename your file to <code>&lt;firstname&gt;-&lt;lastname&gt;-sqlcensus.py</code> and upload it to Moodle.</p>
+
+<h3>Problem 3. Python Objects in SQLite</h3>
+
+<ul>
+<li>Grab the template: <a href="https://github.com/INFO490/assignments/blob/master/hw6/sqlperson.py">sqlperson.py</a></li>
+</ul>
+
+<h4>Overview</h4>
+
+<ul>
+<li>Read <a href="https://docs.python.org/3.4/library/sqlite3.html#sqlite-and-python-types">SQLite and Python types</a>.</li>
+</ul>
+
+<p>In this problem, you will use a class object to interact with <em>SQLite</em>. Make sure you read the section <a href="https://docs.python.org/3.4/library/sqlite3.html#sqlite-and-python-types">SQLite and Python types</a> in the official Python documentation. This problem and the template file follow one of the sample codes very closely, so read the above link very carefully. Read the directions at least once <strong>before</strong> you start writing any code. Browse the template file at least once to get the big picture. If you don't understand something in the code or the directcions, review the lessons, google what you don't understand, or just ask us.</p>
+
+<p>You have to write 5 functions:</p>
+
+<ul>
+<li>adapt_person()</li>
+<li>convert_person()</li>
+<li>create_table()</li>
+<li>insert_person()</li>
+<li>print_head()</li>
+</ul>
+
+<p>These functions are divided up so that each function can be written in one or two lines at most (except maybe the <em>print_head()</em> function which can be written in 3 or 4 lines).</p>
+
+<p>Recall that in week 3 assignment you wrote a class named <em>OnePerson</em> that represents a row in the Illinois census file. All you have to do in this problem is modify the sample code (which uses <em>Point</em> object) in the above link to use our <em>OnePerson</em> object. Thus, you will need to import <em>person.py</em> module you wrote. If you want to use your own code, you will have to make sure that it is possible to construct the class by passing a list, e.g.</p>
+
+<pre><code>person = OnePerson(['a', 'b', 'c'])
+</code></pre>
+
+<p>that is, your initializer should be something like</p>
+
+<pre><code>def __init__(self, row = None):
+    self.row = row
+</code></pre>
+
+<p>If you are not sure your code will behave correctly, you can download and use my version of <a href="https://github.com/INFO490/assignments/blob/master/hw6/person.py">person.py</a> from GitHub.</p>
+
+<p>At the end, your code should produce exactly the same output as the code from week 3, i.e. read the 100th line of the census file and print out the first 10 columns.</p>
+
+<pre><code>Column 0 is: P
+Column 1 is: 1142
+Column 2 is: 01
+Column 3 is: 03408
+Column 4 is: 17
+Column 5 is: 1010207
+Column 6 is: 00203
+Column 7 is: 43
+Column 8 is: 5
+Column 9 is:
+</code></pre>
+
+<p>Only this time, you will do this by interacting with an SQL database. As the official Python documentation explains, in order to move back and forth between Python and SQLite, we need an adaptor that sends the <em>OnePerson</em> class to <em>SQLite</em> by representing the object as a string, and a converter that accepts the string representation and reconstructs a <em>OnePerson</em> object.</p>
+
+<h4>Function: main()</h4>
+
+<p>Read the <em>main()</em> function first to understand the flow of the code. This function is already written and provided for you, so you don't have to change anything here.</p>
+
+<h4>Function: adapt_person()</h4>
+
+<ul>
+<li>Write a function named <em>adapt_person()</em> that accepts a <em>OnePerson</em> object as an argument and returns a string representation of <em>OnePerson.row</em> (each item in the list separated by commans).</li>
+</ul>
+
+<p>This function will be used in <em>sqlite3.register_adapter()</em> method to make <em>SQLite</em> aware how to translate our <em>OnePerson</em> object to an SQL data type <em>person</em>.</p>
+
+<h4>Function: convert_person()</h4>
+
+<ul>
+<li>Write a function named <em>convert_person()</em> that accepts a string and returns a <em>OnePerson</em> object constructed from the string.</li>
+</ul>
+
+<p>This function will be used in <em>sqlite3.register_converter()</em> method to make <em>SQLite</em> aware how to translate an SQL data type <em>person</em> back to our <em>OnePerson</em> object.</p>
+
+<h4>Function: create_table()</h4>
+
+<ul>
+<li>Write a function named <em>create_table()</em> that accepts an <em>sqlite3.Cursor</em> object and creates an SQL table named <em>myCensus</em>, which stores an instance of <em>OnePerson</em> object.</li>
+</ul>
+
+<h4>Function: insert_person()</h4>
+
+<ul>
+<li>Write a function named <em>insert_person()</em> that accepts an <em>sqlite3.Cursor</em> object as the first argument and a <em>OnePerson</em> object as the second argument. It then inserts the values of <em>OnePerson</em> object into the <em>myCensus</em> table created by the <em>create_table()</em> function.</li>
+</ul>
+
+<h4>Function: print_head()</h4>
+
+<ul>
+<li>Write a function named <em>print_head()</em> that accepts an <em>sqlite3.Cursor</em> object. It should first execute a SELECT statement that retrieves the instance of <em>OnePerson</em> object stored in the <em>myCensus</em> table. It should then call the cursor's <em>fechone()</em> or <em>fetchall()</em> to retrieve the <em>OnePerson</em> object. Use the <em>OnePerson.print_column()</em> method to print out the first 10 columns.</li>
+</ul>
+
+<h4>Submission Instructions</h4>
+
+<p>Rename your file to <code>&lt;firstname&gt;-&lt;lastname&gt;-sqlperson.py</code> and upload it to Moodle.</p>
