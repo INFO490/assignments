@@ -14,7 +14,7 @@ from person import OnePerson
 def adapt_person(person):
     '''
     Takes a OnePerson object and returns a string representation of OnePerson.row.
-
+    
     Example:
     >>> from person import OnePerson
     >>> p = OnePerson(['a', 'b', 'c'])

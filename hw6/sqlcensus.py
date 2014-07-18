@@ -1,5 +1,12 @@
 #!/usr/bin/python
 
+# Week 6 Problem 2
+# Do not delete the comments.
+# Do not chnage the functions names, do not change the input parameters.
+# Do not change the return types of the functions.
+# Your code goes to the part where it says your code goes here.
+# Do not change anything else other than the part where it says your code goes here.
+
 from __future__ import print_function
 import sqlite3
 import pandas as pd
