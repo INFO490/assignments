@@ -144,25 +144,25 @@ These functions are divided up so that each function can be written in one or tw
 
 #### Function: join_census()
 
-The *join_census()* function joins _myCensus_ and _moreCensus_ tables into a new table. It is probably easiest to
+The *join_census()* function joins _myCensus_ and _moreCensus_ tables into a new table named *myMoreCensus*. It is probably easiest to
 
-- Use the same command from Problem 1 as an argument to the `execute()` method.
+- Use the same command from Problem 1 as an argument to the *execute()* method.
 
 #### Function: insert_me()
 
-This function inserts a new row into the `myMoreCensus` table. You should use the same values you used in Problem 1.
+This function inserts a new row into the *myMoreCensus* table. You should use the same values you used in Problem 1.
 
-- Use the same command from Problem 1 as an argument to the `execute()` method.
+- Use the same command from Problem 1 as an argument to the *execute()* method.
 
 #### Function: find_millionaires()
 
-The `find_millionaires()` function takes an `sqlite3.Connection` object as an argument and returns a `pandas.Dataframe` object.
+The *find_millionaires()* function takes an *sqlite3.Connection* object as an argument and returns a *pandas.DataFrame* object.
 
-- Use `pandas.read_sql()` method to issue the same query as in Problem 1.
+- Use *pandas.read_sql()* method to issue the same query as in Problem 1 and return the result as a *pandas.DataFrame* object.
 
 #### Function: main()
 
-The _main_ function will create a `sqlite3.Connection` object, call each of above functions in turn, and print out the result. The final result should be
+The _main()_ function will create a *sqlite3.Connection* object, call each of above functions in turn, and print out the result. The final result should be
 
               id  age  hours_worked   income  favorite_number
     0   21504101   58            55   607000                1
@@ -183,7 +183,7 @@ Rename your file to `<firstname>-<lastname>-sqlcensus.py` and upload it to Moodl
 
 #### Overview
 
-In this problem, you will use a class object to interact with *SQLite*. Make sure you read the section [SQLite and Python types](https://docs.python.org/3.4/library/sqlite3.html#sqlite-and-python-types) in the official Python documentation. This problem and the template file follow one of the sample codes very closely, so read above link very carefully. Read the directions at least once __before__ you start writing any code. Browse the template file at least once to get the big picture. If you don't understand something in the code or the directcions, review the lessons, google what you don't understand, or just ask us.
+In this problem, you will use a class object to interact with *SQLite*. Make sure you read the section [SQLite and Python types](https://docs.python.org/3.4/library/sqlite3.html#sqlite-and-python-types) in the official Python documentation. This problem and the template file follow one of the sample codes very closely, so read the above link very carefully. Read the directions at least once __before__ you start writing any code. Browse the template file at least once to get the big picture. If you don't understand something in the code or the directcions, review the lessons, google what you don't understand, or just ask us.
 
 You have to write 5 functions:
 
