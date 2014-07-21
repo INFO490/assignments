@@ -12,14 +12,21 @@ import sqlite3
 import pandas as pd
 
 def read_my_census(connection):
+    # There's a bug in pandas 13.1 or below, where the index column (id)
+    # has to be a string.
+    # This is fixed in 14.0, where you can safely remove dtype conversion.
     my_census = pd.read_csv('ss12pil_sql.csv', header = None,
-                              names = ['id', 'age', 'hours_worked', 'income'])
+                            dtype = {'id': 'str'},
+                            names = ['id', 'age', 'hours_worked', 'income'])
     # your code goes here
     return None
 
 def read_more_census(connection):
-    
+    # There's a bug in pandas 13.1 or below, where the index column (id)
+    # has to be a string.
+    # This is fixed in 14.0, where you can safely remove dtype conversion.
     more_census = pd.read_csv('ss12pil_favorite_number.csv', header = None,
+                              dtype = {'id': 'str'},
                               names = ['id', 'favorite_number'])
     # your code goes here
     return None
