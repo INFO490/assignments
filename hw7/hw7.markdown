@@ -207,11 +207,11 @@ You can find everything you need in [Numpy statistics functions](http://docs.sci
 
 #### Function: get\_lsqfit()
 
-Your task is use Numpy functions to
+Your task is to use Numpy functions to
 
 - Write a function named *get_lsqfit()* that takes two Numpy arrays and returns a tuple of two floats, slope and intercept.
 
-Numpy already has a [function](http://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.lstsq.html) that does this, but you may __not__ use this function in this problem.
+Numpy already has a [function](http://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.lstsq.html) that does this, but you may __not__ use this function in this problem. But it would be a good idea to make sure that your function produces the same result.
 
 #### Function: main()
 
