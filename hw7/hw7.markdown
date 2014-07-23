@@ -18,7 +18,7 @@ and the plot of the CCDF of
 
 ![ccdf](log_ccdf_log_income.png)
 
-These two plot tell us a lot about the income distribution. First, note that the CDF of log(income) is that of a normal distribution (see Figure 4.5 in *Think Stats* by Allen B. Downey). Thus, it suggests that the income distribution follows a log-normal distribution. Second, the log-log plot of CCDF looks like a log-normal distribution for the most part, but it becomes almost a straight line in the very high-income region (The jaggedness is due to small sample size). If you read Section 4.2 in *Think Bayes*, you know that the CCDF of a [Pareto distribution](http://en.wikipedia.org/wiki/Pareto_distribution) looks like a straight line on a log-log scale. So which one is it, or could it be both at the same time?
+These two plots tell us a lot about the income distribution. First, note that the CDF of log(income) is that of a normal distribution (see Figure 4.5 in *Think Stats* by Allen B. Downey). Thus, it suggests that the income distribution follows a log-normal distribution. Second, the log-log plot of CCDF looks like a log-normal distribution for the most part, but it becomes almost a straight line in the very high-income region (The jaggedness is due to the small sample size in this region). If you read Section 4.2 in *Think Stats*, you know that the CCDF of a [Pareto distribution](http://en.wikipedia.org/wiki/Pareto_distribution) looks like a straight line on a log-log scale. So which one is it, or could it be both at the same time?
 
 According to Wikipedia on [Log-normal distribution](http://en.wikipedia.org/wiki/Log-normal_distribution),
 
@@ -66,7 +66,7 @@ In the *main()* function, you have to use *Matplotlib* to plot similar figures t
 
 ### Problem 2. The Locomotive Problem.
 
-- Grab the template: [locomotive.py](https://github.com/INFO490/assignments/blob/master/hw7/locomotive.py)
+- Grab the template: [households.py](https://github.com/INFO490/assignments/blob/master/hw7/households.py)
 
 #### Overview
 
@@ -186,21 +186,64 @@ Hint: Again, you can use element-wise multiplication of *hypotheses* and *poster
 
 ### Problem 3. Least Squares Fit.
 
-- There is no template for this problem.
+- Grab the template: [lsqfit.py](https://github.com/INFO490/assignments/blob/master/hw7/lsqfit.py)
 
-#### 
+#### Overview
 
 Using the Illinois census data *ss12pil.csv*, pick two columns that you believe will have a correlation, and compute a least squares fit for the two columns. Make a scatter plot of the two columns you chose. In the same figure, plot the line of best fit using the slope and intercept from the least squares fit. Submit your code via Moodle as *firstname-lastname-lsqfit.py*. Here's an example:
 
 ![lsqfit](lsqfit.png)
 
+Section 9.6 of *Think Stats* describes how to compute a least squares fit, which I paraphrase:
+
+<blockquote>
+<p>Given two Numpy arrays <code>x</code> and <code>y</code>,</p>
+<p>1. Compute the sample means, <code>x.mean()</code> and <code>y.mean()</code>, the variance of <code>x</code>, <code>x.var()</code>, and the covariance of <code>x</code> and <code>y</code>, <code>cov_xy = np.cov(x, y)[0, 1]</code> or <code>cov_yx = np.cov(x, y)[1, 0]</code>.</p>
+<p>2. The estimated slope is <code>beta = cov_xy / x.var()</code></p>
+<p>3. And the intercept is <code>alpha = y.mean() - beta * x.mean()</code></p>
+</blockquote>
+
+Your task is use Numpy functions to write the following four functions:
+
+- get\_mean()
+- get\_variance()
+- get\_covariance()
+- get\_slope()
+- get\_intercept()
+
+All of these funcions should be very easy for you to write. (If you are still not sure, go back ten lines.) You should also
+
+- create a scatter plot and plot the line of best fit in the same figure.
+
+#### Function: main()
+
+Use *alpha* and *beta* values to create your plot. Here are some tips:
+
 - I used columns WKHP and PINCP, but you do not have to use the same columns I did. Or you can choose to reproduce the above plot. Your choice.
 
 - The file *ss12pil.csv* is one of the American Community Survey (ACS) Public Use Microdata Sample (PUMS) files. You can read more about ACS PUMS [here](http://www.census.gov/acs/www/data_documentation/public_use_microdata_sample/). This [link](http://www.census.gov/acs/www/Downloads/data_documentation/pums/DataDict/PUMSDataDict12.pdf) is a pdf file of the data dictionary, which shows what each column (e.g. SERIALNO, AGEP, WKHP, etc.) means.
 
-- I highly recommend that you read Section 9.6 of *Think Stats* and write your own code using Numpy (by calculating sample means, variance, and covariance). However, this is not required and you may use other methods: you could download the solution to Exercise 9.5 in *Think Stats*; you could google a Python implementation of least squares fit; you could use Numpy or Scipy; or any other method you can think of to perform the task.
-
 - For making scatter plots using Matplotlib, refer to week 4 lessons and Section 9.4 of *Think Stats*.
+
+#### Function: get\_mean()
+
+- Write a function named *get_mean()* that takes a Numpy array and returns a float (the mean).
+
+#### Function: get\_variance()
+
+- Write a function named *get_variance()* that takes a Numpy array and returns a float (the variance).
+
+#### Function: get\_covariance()
+
+- Write a function named *get_covariance()* that takes two Numpy arrays *x* and *y* and returns a float (cov(x, y)).
+
+#### Function: get\_slope()
+
+- Write a function named *get_slope()* that takes two Numpy floats and returns a float (*beta*).
+
+#### Function: get\_intercept()
+
+- Write a function named *get_intercept()* that takes two Numpy floats and returns a float (*alpha*).
 
 #### Submission instructions
 
