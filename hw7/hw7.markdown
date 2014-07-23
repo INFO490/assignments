@@ -18,7 +18,7 @@ and the plot of the CCDF of
 
 ![ccdf](log_ccdf_log_income.png)
 
-These two plot tell us a lot about the income distribution. First, note that the CDF of log(income) is that of a normal distribution (see Figure 4.5 in *Think Stats* by Allen B. Downey). Thus, it suggests that the income distrubution follows a lognormal distribution. Second, the log-log plot of CCDF looks like a lognormal distribution for the most part, but it becomes almost a straight line in the very high-income region (The jaggedness is due to small sample size). If you read Section 4.2 in *Think Bayes*, you know that the CCDF of a [Pareto distribution](http://en.wikipedia.org/wiki/Pareto_distribution) looks like a straight line on a log-log scale. So which one is it, or could it be both at the same time?
+These two plot tell us a lot about the income distribution. First, note that the CDF of log(income) is that of a normal distribution (see Figure 4.5 in *Think Stats* by Allen B. Downey). Thus, it suggests that the income distribution follows a log-normal distribution. Second, the log-log plot of CCDF looks like a log-normal distribution for the most part, but it becomes almost a straight line in the very high-income region (The jaggedness is due to small sample size). If you read Section 4.2 in *Think Bayes*, you know that the CCDF of a [Pareto distribution](http://en.wikipedia.org/wiki/Pareto_distribution) looks like a straight line on a log-log scale. So which one is it, or could it be both at the same time?
 
 According to Wikipedia on [Log-normal distribution](http://en.wikipedia.org/wiki/Log-normal_distribution),
 
@@ -79,7 +79,7 @@ The number 1493780 is the serial number of the very last household in the *ss12p
 However, we will completely rewrite Downey's code by eliminating the class structure and using Numpy, because
 
 1. Classes have their advantages, but they make it hard to see what is really going on under the hood, and our goal in this problem is to understand the underlying concepts,
-2. Using Numpy means no *for* loops, which in my opinion makes it eaiser to understand what's going on,
+2. Using Numpy means no *for* loops, which in my opinion makes it easier to understand what's going on,
 3. Downey mostly uses pure Python. This is very slow, so we will use Numpy. The difference in speed may not matter much when we are dealing with a locomotive with the serial number 60 and a total number of locomotives on the order of thousands. But when the serial number is close to 1.5 million and the total number could be on the order of tens of millions, the difference in speed is substantial.
 
 How substantial is the difference? Applying Downey's pure Python code to our problem, I got
@@ -110,7 +110,7 @@ Your task is to write the following five functions:
 - get\_posterior()
 - get\_estimate()
 
-Note that if you use Numpy functions correctly, each function should not take more than one or two lines to write. I will give you hints on how to do this, but you don't have to follow my recommendations as long as your functions do what they are supposed to do, i.e. take the specified paramters and return the correct Numpy arrays. But remember that all functions must return Numpy arrays, so if you use *for* loops you code will be very inefficient.
+Note that if you use Numpy functions correctly, each function should not take more than one or two lines to write. I will give you hints on how to do this, but you don't have to follow my recommendations as long as your functions do what they are supposed to do, i.e. take the specified parameters and return the correct Numpy arrays. But remember that all functions must return Numpy arrays, so if you use *for* loops you code will be very inefficient.
 
 #### main
 
@@ -143,12 +143,12 @@ Hint: Say you have the following Numpy arrays:
     >>> x = np.array([1.0, 2.0, 3.0])
     >>> y = np.array([0.5, 2.5, 2.5])
 
-You want to compare them *element-wise* and create a boolean array of True if x >= y and False if x < y. An easy way to do this is
+You want to compare them *element-wise* and create a Boolean array of True if x >= y and False if x < y. An easy way to do this is
 
     >>> (x > y)
     array([ True, False,  True], dtype=bool)
 
-See also [numpy.ndarray.astype()](http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.astype.html). That means we can convert our boolean array to, say, an array of floats with
+See also [numpy.ndarray.astype()](http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.astype.html). That means we can convert our Boolean array to, say, an array of floats with
 
     >>> (x > y).astype(np.float)
     array([ 1.,  0.,  1.])
@@ -159,14 +159,14 @@ See also [numpy.ndarray.astype()](http://docs.scipy.org/doc/numpy/reference/gene
 
 From Bayes' theorem, the posterior P(D) is equal to prior times likelihood (divided by normalizing constant). Thus, the *get_posterior()* function should call *get_uniform_prior()* using *hypotheses*, call *get_likelihood()* using *data* and *hypotheses*, and multiply them to produce a posterior.
 
-Hint: A simple multiplcation of two Numpy arrays performs the multiplication *element-wise*. For example,
+Hint: A simple multiplication of two Numpy arrays performs the multiplication *element-wise*. For example,
 
     >>> x = np.array([1.0, 2.0, 3.0])
     >>> y = np.array([4.0, 5.0, 6.0])
     >>> x * y
     array([  4.,  10.,  18.])
 
-This element-wise multiplcation is exactly what we want; we want to multiply the prior and the likelihood element-wise.
+This element-wise multiplication is exactly what we want; we want to multiply the prior and the likelihood element-wise.
 
 Hint: Don't forget to normalize. Since adding up all elements of the posterior array should give you 1.0, an easy way to normalize is to divide each element by the sum of all elements. See [numpy.sum()](http://docs.scipy.org/doc/numpy/reference/generated/numpy.sum.html). For example, 
 
@@ -200,7 +200,7 @@ Using the Illinois census data *ss12pil.csv*, pick two columns that you believe 
 
 - I highly recommend that you read Section 9.6 of *Think Stats* and write your own code using Numpy (by calculating sample means, variance, and covariance). However, this is not required and you may use other methods: you could download the solution to Exercise 9.5 in *Think Stats*; you could google a Python implementation of least squares fit; you could use Numpy or Scipy; or any other method you can think of to perform the task.
 
-- For making scatterplots using Matplotlib, refer to week 4 lessons and Section 9.4 of *Think Stats*.
+- For making scatter plots using Matplotlib, refer to week 4 lessons and Section 9.4 of *Think Stats*.
 
 #### Submission instructions
 
