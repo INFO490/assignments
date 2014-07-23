@@ -197,53 +197,34 @@ Using the Illinois census data *ss12pil.csv*, pick two columns that you believe 
 Section 9.6 of *Think Stats* describes how to compute a least squares fit, which I paraphrase:
 
 <blockquote>
-<p>Given two Numpy arrays <code>x</code> and <code>y</code>,</p>
-<p>1. Compute the sample means, <code>x.mean()</code> and <code>y.mean()</code>, the variance of <code>x</code>, <code>x.var()</code>, and the covariance of <code>x</code> and <code>y</code>, <code>cov_xy = np.cov(x, y)[0, 1]</code> or <code>cov_yx = np.cov(x, y)[1, 0]</code>.</p>
-<p>2. The estimated slope is <code>beta = cov_xy / x.var()</code></p>
-<p>3. And the intercept is <code>alpha = y.mean() - beta * x.mean()</code></p>
+<p>Given two Numpy arrays x and y,</p>
+<p>1. Compute the sample means, x.mean and y.mean, the variance of x, and the covariance of x and y.</p>
+<p>2. The estimated slope is beta = Cov(x, y) / Var(x).</p>
+<p>3. And the intercept is alpha = y.mean - beta * x.mean</p>
 </blockquote>
 
-Your task is use Numpy functions to write the following four functions:
+You can find everything you need in [Numpy statistics functions](http://docs.scipy.org/doc/numpy/reference/routines.statistics.html).
 
-- get\_mean()
-- get\_variance()
-- get\_covariance()
-- get\_slope()
-- get\_intercept()
+#### Function: get\_lsqfit()
 
-All of these funcions should be very easy for you to write. (If you are still not sure, go back ten lines.) You should also
+Your task is use Numpy functions to
 
-- create a scatter plot and plot the line of best fit in the same figure.
+- Write a function named *get_lsqfit()* that takes two Numpy arrays and returns a tuple of two floats, slope and intercept.
+
+Numpy already has a [function](http://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.lstsq.html) that does this, but you may __not__ use this function in this problem.
 
 #### Function: main()
 
-Use *alpha* and *beta* values to create your plot. Here are some tips:
+- Create a scatter plot, and
+- Use *alpha* and *beta* values to plot the line of best fit in the same figure.
+
+Here are some tips:
 
 - I used columns WKHP and PINCP, but you do not have to use the same columns I did. Or you can choose to reproduce the above plot. Your choice.
 
 - The file *ss12pil.csv* is one of the American Community Survey (ACS) Public Use Microdata Sample (PUMS) files. You can read more about ACS PUMS [here](http://www.census.gov/acs/www/data_documentation/public_use_microdata_sample/). This [link](http://www.census.gov/acs/www/Downloads/data_documentation/pums/DataDict/PUMSDataDict12.pdf) is a pdf file of the data dictionary, which shows what each column (e.g. SERIALNO, AGEP, WKHP, etc.) means.
 
 - For making scatter plots using Matplotlib, refer to week 4 lessons and Section 9.4 of *Think Stats*.
-
-#### Function: get\_mean()
-
-- Write a function named *get_mean()* that takes a Numpy array and returns a float (the mean).
-
-#### Function: get\_variance()
-
-- Write a function named *get_variance()* that takes a Numpy array and returns a float (the variance).
-
-#### Function: get\_covariance()
-
-- Write a function named *get_covariance()* that takes two Numpy arrays *x* and *y* and returns a float (cov(x, y)).
-
-#### Function: get\_slope()
-
-- Write a function named *get_slope()* that takes two Numpy floats and returns a float (*beta*).
-
-#### Function: get\_intercept()
-
-- Write a function named *get_intercept()* that takes two Numpy floats and returns a float (*alpha*).
 
 #### Submission instructions
 
