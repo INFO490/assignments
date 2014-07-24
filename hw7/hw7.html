@@ -1,0 +1,299 @@
+<h2>Week 7 Assignment</h2>
+
+<p>For an up-to-date version of this document, see <a href="https://github.com/INFO490/assignments/blob/master/hw7/hw7.markdown">week 7 assignment</a>.</p>
+
+<h3>Problem 1. PMF, CDF, and CCDF.</h3>
+
+<ul>
+<li>Grab the template: <a href="https://github.com/INFO490/assignments/blob/master/hw7/distributions.py">distributions.py</a></li>
+</ul>
+
+<h4>Overview</h4>
+
+<p>In this problem, you will compute the probability mass function (PMF), cumulative distribution function (CDF), and complementary cumulative distribution function (CCDF), and plot them. Here are some examples to show you where we are going. First, we plot the PMF of the WKHP (hours worked per week) column of <em>ss12pil.csv</em>.</p>
+
+<p><img src="pmf_work.png" alt="pmf" title="" /></p>
+
+<p>Predictably, most people work 40 hours a week. Next, we plot the CDF of the PINCP (income) column,</p>
+
+<p><img src="cdf_log_income.png" alt="cdf" title="" /></p>
+
+<p>and also plot the CCDF,</p>
+
+<p><img src="log_ccdf_log_income.png" alt="ccdf" title="" /></p>
+
+<p>These two plots tell us a lot about the income distribution. First, note that the CDF of log(income) is that of a normal distribution (compare it with Figure 4.5 in <em>Think Stats</em> by Allen B. Downey). Thus, it suggests that the income distribution is a log-normal distribution. Second, the log-log plot of CCDF looks like a log-normal distribution for the most part, but it becomes a straight line in the very high-income region (The jaggedness is due to the small sample size in this region). If you have read Section 4.2 of <em>Think Stats</em>, you know that the CCDF of a <a href="http://en.wikipedia.org/wiki/Pareto_distribution">Pareto distribution</a> looks like a straight line on a log-log scale. So which one is it, log-normal or Pareto, or could it be both at the same time?</p>
+
+<p>According to Wikipedia on <a href="http://en.wikipedia.org/wiki/Log-normal_distribution">log-normal distribution</a>,</p>
+
+<blockquote>
+  <p>In economics, there is evidence that the income of 97%–99% of the population is distributed log-normally. (The distribution of higher-income individuals follows a Pareto distribution.)</p>
+</blockquote>
+
+<p>It seems like we have (or are about to) reproduce just such evidence. Your tasks in this problem are:</p>
+
+<ul>
+<li>Write <em>get_histogram()</em> function,</li>
+<li>Write <em>get_pmf()</em> function,</li>
+<li>Write <em>get_cdf()</em> function, (CCDF is simply 1.0 - CDF)</li>
+<li>Plot PMF of hours worked per week,</li>
+<li>Plot CDF of income,</li>
+<li>Plot CCDF of income.</li>
+</ul>
+
+<h4>Function: get_histogram()</h4>
+
+<ul>
+<li>Write a function named <em>get_histogram()</em> that takes a list and returns a dictionary of the form {value: frequency}.</li>
+</ul>
+
+<p>As the name suggests, this function returns the dictionary form of a histogram. See Section 2.3 of <em>Think Bayes</em> for hints.</p>
+
+<h4>Function: get_pmf()</h4>
+
+<ul>
+<li>Write a function named <em>get_pmf()</em> that takes a list and returns a dictionary of the form {value: probability}.</li>
+</ul>
+
+<p>Note that PMF is a <em>normalized</em> histogram, and you may want to call <em>get_histogram()</em> function from inside <em>get_pmf()</em> function. See Section 2.3 of <em>Think Bayes</em> for hints.</p>
+
+<h4>Function: get_cdf()</h4>
+
+<ul>
+<li>Write a function named <em>get_cdf()</em> that takes an array <em>sequence</em> and returns a tuple that represents the x and y axes of the (empirical) CDF.</li>
+</ul>
+
+<p>Here is a very easy algorithm to implement this function. See the definition of <a href="http://en.wikipedia.org/wiki/Empirical_distribution_function">empirical distribution function</a> on Wikipedia. That means we can simply</p>
+
+<ol>
+<li>First, sort the <em>sequence</em> array in ascending order. This will be our x-axis,</li>
+<li>Next, create an array of [1 / N, 2 / N, ..., 1]. This will be our y-axis. All you have to do is use <em>np.arange()</em> to make an array of the same length as the <em>sequence</em> array, and divide each element by the length of <em>sequence</em>.</li>
+</ol>
+
+<p>According to Wikipedia, the resulting empirical CDF is an unbiased estimator for the true CDF.</p>
+
+<p>Note: Do NOT use <em>numpy.histogram()</em> function to create a CDF. It uses binning, which might be useful in other cases but not in this case. The method I outlined above is a better characterization of the true CDF.</p>
+
+<h4>Function: main()</h4>
+
+<p>In the <em>main()</em> function, you have to use <em>Matplotlib</em> to create plots similar to the ones shown above. Note that we import <em>get_columns()</em> function from the <a href="https://github.com/INFO490/assignments/blob/master/hw7/stats2.py">stats2.py</a> module that we wrote in week 3, so if you are not sure if your <em>get_columns()</em> function is written correctly, download both <a href="https://github.com/INFO490/assignments/blob/master/hw7/stats2.py">stats2.py</a> and <a href="https://github.com/INFO490/assignments/blob/master/hw7/stats.py">stats.py</a>.</p>
+
+<h4>Submission instructions</h4>
+
+<ul>
+<li>Rename your file to <code>&lt;firstname&gt;-&lt;lastname&gt;-distributions.py</code> and upload it to Moodle.</li>
+</ul>
+
+<h3>Problem 2. The Locomotive Problem.</h3>
+
+<ul>
+<li>Grab the template: <a href="https://github.com/INFO490/assignments/blob/master/hw7/households.py">households.py</a></li>
+</ul>
+
+<h4>Overview</h4>
+
+<p>The locomotive problem is found in Section 3.2 of <em>Think Bayes</em> by Allen B. Downey. We will rephrase the locomotive problem and apply it to our Illinois census data:</p>
+
+<blockquote>
+  <p>The households in 2012 Illinois census data are labeled using the serial numbers {1, 2, ..., N}. You see a household with the serial number 1493780. Estimate how many households there are in Illinois.</p>
+</blockquote>
+
+<p>The number 1493780 is the serial number of the very last household listed in <em>ss12pil.csv</em>.</p>
+
+<p>In this problem, we will completely rewrite Downey's code by eliminating the class structure and using Numpy, because</p>
+
+<ol>
+<li>Classes have their advantages, but they make it hard to see what is really going on under the hood, and our goal in this problem is to understand the underlying concepts,</li>
+<li>Using Numpy means no <em>for</em> loops, which in my opinion makes it easier to understand what's going on,</li>
+<li>Downey mostly uses pure Python. This is very slow, so we will use Numpy. The difference in speed may not matter much when we are dealing with serial number 60 and a total number of locomotives on the order of thousands. But when the serial number is close to 1.5 million and the total number of households could be on the order of tens of millions, the difference in speed is substantial.</li>
+</ol>
+
+<p>How substantial is the difference? Applying Downey's pure Python code to our problem, I got</p>
+
+<pre><code>$ time python train.py
+Estimated number of households: 5285183
+
+real    0m24.686s
+user    0m18.316s
+sys     0m0.928s
+</code></pre>
+
+<p>but using Numpy, I got</p>
+
+<pre><code>$ time ./households.py 
+Estimated number of households: 5285183
+
+real    0m0.963s
+user    0m0.568s
+sys     0m0.392s
+</code></pre>
+
+<p>And that's for one serial number. When you run Bayesian updates for example, it quickly adds up.</p>
+
+<p>Your task in this problem is to write the following five functions:</p>
+
+<ul>
+<li>get_hypotheses()</li>
+<li>get_uniform_prior()</li>
+<li>get_likelihood()</li>
+<li>get_posterior()</li>
+<li>get_estimate()</li>
+</ul>
+
+<p>Note that if you use Numpy functions correctly, each function will not take more than one or two lines to write. I will give you hints on how to do this, but you don't have to follow my recommendations as long as your functions do what they are supposed to do, i.e. take the specified parameters and return the correct Numpy arrays. But remember that all functions must return Numpy arrays, so if you use <em>for</em> loops you code will be very inefficient.</p>
+
+<h4>Function: main()</h4>
+
+<p>The main function is already written and provided for you. You don't have to write anything here. Browse this first to understand the big picture.</p>
+
+<h4>Function: get_hypotheses()</h4>
+
+<ul>
+<li>Write a function named <em>get_hypotheses()</em> that takes two integers (the first serial number 1 and the final serial number N) and returns a Numpy array of integers [1, 2, ..., N].</li>
+</ul>
+
+<p>Note that the number N will be used for building a uniform prior. So what is our prior belief regarding the number of households in IL before seeing the data? Not much except that we have some idea about the population of IL. A quick google search shows me that the population of IL in 2012 was 12.88 million. The number of households cannot be greater than the population, so I think it's reasonable to use hypotheses of [1, 2, ..., 12880000].</p>
+
+<p>Hint: Use <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.arange.html">numpy.arange()</a>.</p>
+
+<h4>Function: get_uniform_prior()</h4>
+
+<ul>
+<li>Write a function named <em>get_uniform_prior()</em> that takes a Numpy array (an array of hypotheses) and returns a Numpy array of floats (an array of uniform prior).</li>
+</ul>
+
+<p>The prior is P(H) in Bayes' theorem. Here we use a uniform prior, i.e. all elements in the array have same values, 1 / N.</p>
+
+<p>Hint: See <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ones_like.html">numpy.ones<em>like()</a>. Create an array of same length as hypotheses with all ones. (If the input array to *ones</em>like()* is an integer array, the output array will also be an integer array; you might want to specify <em>dtype</em> to make it a floating point array.) Divide all elements by the length of hypotheses.</p>
+
+<h4>Function: get_likelihood()</h4>
+
+<ul>
+<li>Write a function named <em>get_likelihood()</em> that takes an integer (data) and a Numpy array (hypotheses), and returns a Numpy array of floats (likelihood).</li>
+</ul>
+
+<p>The likelihood is P(D|H) in Bayes' theorem. Recall that hypotheses is a Numpy array of [1, 2, ..., N]. If the n-th element of hypotheses is smaller than data, the n-th element of likelihood is zero because the serial number cannot be greater than the number of households. On the other hand, if the n-th element of hypotheses is greater than or equal to data, the question becomes what is the chance of getting a particular serial number given that there are hypotheses[n] persons? Thus, if hypotheses[n] >= data, likelihood[n] is 1.0 / hypotheses[n], and 0 otherwise.</p>
+
+<p>Hint: Say you have the following Numpy arrays:</p>
+
+<pre><code>&gt;&gt;&gt; x = np.array([1.0, 2.0, 3.0])
+&gt;&gt;&gt; y = np.array([0.5, 2.5, 2.5])
+</code></pre>
+
+<p>You want to compare them <em>element-wise</em> and create a Boolean array of True if x >= y and False if x &lt; y. An easy way to do this is</p>
+
+<pre><code>&gt;&gt;&gt; (x &gt; y)
+array([ True, False,  True], dtype=bool)
+</code></pre>
+
+<p>See also <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.astype.html">numpy.ndarray.astype()</a>. That means we can convert our Boolean array to, say, an array of floats with</p>
+
+<pre><code>&gt;&gt;&gt; (x &gt; y).astype(np.float)
+array([ 1.,  0.,  1.])
+</code></pre>
+
+<h4>Function: get_posterior()</h4>
+
+<ul>
+<li>Write a function named <em>get_posterior()</em> that takes an integer (data) and a Numpy array (hypotheses), and returns a Numpy array of floats (posterior).</li>
+</ul>
+
+<p>From Bayes' theorem, the posterior P(D) is equal to prior times likelihood (divided by the normalizing constant). Thus, the <em>get_posterior()</em> function should</p>
+
+<ol>
+<li>Call <em>get_uniform_prior()</em> with <em>hypotheses</em> as a parameter,</li>
+<li>Call <em>get_likelihood()</em> using <em>data</em> and <em>hypotheses</em>,</li>
+<li>Multiply two arrays element-wise,</li>
+<li>And normalize to produce a posterior.</li>
+</ol>
+
+<p>Hint: A simple multiplication of two Numpy arrays performs the multiplication <em>element-wise</em>. For example,</p>
+
+<pre><code>&gt;&gt;&gt; x = np.array([1.0, 2.0, 3.0])
+&gt;&gt;&gt; y = np.array([4.0, 5.0, 6.0])
+&gt;&gt;&gt; x * y
+array([  4.,  10.,  18.])
+</code></pre>
+
+<p>This element-wise multiplication is exactly what we want; we want to multiply the prior and the likelihood element-wise.</p>
+
+<p>Hint: Don't forget to normalize. Since adding up all elements of the posterior array should give you 1.0, an easy way to normalize is to divide each element by the sum of all elements. See <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.sum.html">numpy.sum()</a>. For example, </p>
+
+<pre><code>&gt;&gt;&gt; x = np.array([1.0, 2.0, 3.0, 4.0])
+&gt;&gt;&gt; x / x.sum()
+array([ 0.1,  0.2,  0.3,  0.4])
+</code></pre>
+
+<h4>Function: get_estimate()</h4>
+
+<ul>
+<li>Write a function named <em>get_estimate()</em> that takes two Numpy arrays (posterior and hypotheses) and returns a Numpy array of floats (estimate).</li>
+</ul>
+
+<p>Hint: Again, you can use element-wise multiplication of <em>hypotheses</em> and <em>posterior</em>, and our estimate is the sum of all elements in the product array.</p>
+
+<h4>Submission instructions</h4>
+
+<ul>
+<li>Rename your file to <code>&lt;firstname&gt;-&lt;lastname&gt;-households.py</code> and upload it to Moodle.</li>
+</ul>
+
+<h3>Problem 3. Least Squares Fit.</h3>
+
+<ul>
+<li>Grab the template: <a href="https://github.com/INFO490/assignments/blob/master/hw7/lsqfit.py">lsqfit.py</a></li>
+</ul>
+
+<h4>Overview</h4>
+
+<p>Using the Illinois census data <em>ss12pil.csv</em>, pick any two columns that you think are correlated, and compute a least squares fit for the two columns. Make a scatter plot of the two columns you chose. In the same figure, plot the line of best fit using the slope and intercept from the least squares fit. Submit your code via Moodle as <em>firstname-lastname-lsqfit.py</em>.</p>
+
+<p>Here's an example:</p>
+
+<p><img src="lsqfit.png" alt="lsqfit" title="" /></p>
+
+<p>Section 9.6 of <em>Think Stats</em> describes how to compute a least squares fit, which I paraphrase:</p>
+
+<blockquote>
+<p>Given two Numpy arrays x and y,</p>
+<p>1. Compute the sample means, x.mean() and y.mean(), the variance of x, and the covariance of x and y.</p>
+<p>2. The estimated slope is beta = Cov(x, y) / Var(x).</p>
+<p>3. And the intercept is alpha = y.mean() - beta * x.mean().</p>
+</blockquote>
+
+<p>You can find everything you need in <a href="http://docs.scipy.org/doc/numpy/reference/routines.statistics.html">Numpy statistics functions</a>.</p>
+
+<h4>Function: get_lsqfit()</h4>
+
+<p>Your task is to use Numpy functions to</p>
+
+<ul>
+<li>Write a function named <em>get_lsqfit()</em> that takes two Numpy arrays and returns a tuple of two floats (slope and intercept).</li>
+</ul>
+
+<p>Numpy already has a <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.lstsq.html">function</a> that does this, but you may <strong>not</strong> use this function (or any other pre-built functions that computes the least squares fit) for this problem. But you might want to compare your result with the Numpy least squares fit function to make sure that you got it right.</p>
+
+<p>Tip: If you are going to use the <em>numpy.var()</em> function, you should specify an optional parameter <em>ddof</em>, i.e. use <code>numpy.var(ddof = 1)</code>. See Numpy manual and Section 8.2 of <em>Think Stats</em> for discussion on biased and unbiased estimators.</p>
+
+<h4>Function: main()</h4>
+
+<p>In the <em>main()</em> function,</p>
+
+<ul>
+<li>Create a scatter plot,</li>
+<li>And use <em>alpha</em> and <em>beta</em> values to plot the line of best fit in the same figure.</li>
+</ul>
+
+<p>Here are some tips:</p>
+
+<ul>
+<li><p>I used columns WKHP and PINCP, but you do not have to use the same columns I did. Or you can choose to reproduce the above plot. Your choice.</p></li>
+<li><p>The file <em>ss12pil.csv</em> is one of the American Community Survey (ACS) Public Use Microdata Sample (PUMS) files. You can read more about ACS PUMS <a href="http://www.census.gov/acs/www/data_documentation/public_use_microdata_sample/">here</a>. This <a href="http://www.census.gov/acs/www/Downloads/data_documentation/pums/DataDict/PUMSDataDict12.pdf">link</a> is a pdf file of the data dictionary, which shows what each column (e.g. SERIALNO, AGEP, WKHP, etc.) means.</p></li>
+<li><p>For creating scatter plots using <em>Matplotlib</em>, refer to week 4 lessons and Section 9.4 of <em>Think Stats</em>.</p></li>
+</ul>
+
+<h4>Submission instructions</h4>
+
+<ul>
+<li>Rename your file to <code>&lt;firstname&gt;-&lt;lastname&gt;-lsqfit.py</code> and upload it to Moodle.</li>
+</ul>
