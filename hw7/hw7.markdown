@@ -100,7 +100,7 @@ but using Numpy, I got
     user    0m0.568s
     sys     0m0.392s
 
-I hope you are convinced.
+And that's for one serial number. When you run Bayesian updates for example, the difference quickly adds up.
 
 Your task is to write the following five functions:
 
