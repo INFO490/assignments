@@ -72,7 +72,7 @@ def clean_statuses(statuses):
 
 def get_counts(words):
     '''
-    Takes a list of strings and returns a dictionary of {string: frequency}.
+    Takes a list of strings and returns a list of tuples (string, int).
 
     Parameters:
       words: a list of strings
