@@ -26,14 +26,14 @@ According to Wikipedia on [log-normal distribution](http://en.wikipedia.org/wiki
 
 > In economics, there is evidence that the income of 97%–99% of the population is distributed log-normally. (The distribution of higher-income individuals follows a Pareto distribution.)
 
-It seems like we have (or are about to) reproduce just such evidence. Your tasks in this problem are:
+It seems like we have (or are about to) reproduce just such evidence. Your task in this problem is to
 
 - Write *get_histogram()* function,
 - Write *get_pmf()* function,
 - Write *get_cdf()* function, (CCDF is simply 1.0 - CDF)
 - Plot PMF of hours worked per week,
 - Plot CDF of income,
-- Plot CCDF of income.
+- And plot CCDF of income.
 
 #### Function: get\_histogram()
 
