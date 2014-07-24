@@ -1,12 +1,16 @@
 ## Week 7 Assignment
 
+###
+
+For an up-to-date version of this document, see [week 7 assignment](https://github.com/INFO490/assignments/blob/master/hw7/hw7.markdown).
+
 ### Problem 1. PMF, CDF, and CCDF.
 
 - Grab the template: [distributions.py](https://github.com/INFO490/assignments/blob/master/hw7/distributions.py)
 
 #### Overview
 
-In this problem, you will compute probability mass function (PMF), cumulative distribution function (CDF), and complementary cumulative distribution function (CCDF), and plot them. Here are the examples to show where we are going. First, we plot the PMF of the WKHP column (hours worked per week) of *ss12pil.csv*.
+In this problem, you will compute the probability mass function (PMF), cumulative distribution function (CDF), and complementary cumulative distribution function (CCDF), and plot them. Here are some examples to show you where we are going. First, we plot the PMF of the WKHP (hours worked per week) column of *ss12pil.csv*.
 
 ![pmf](pmf_work.png)
 
@@ -18,13 +22,13 @@ and also plot the CCDF,
 
 ![ccdf](log_ccdf_log_income.png)
 
-These two plots tell us a lot about the income distribution. First, note that the CDF of log(income) is that of a normal distribution (see Figure 4.5 in *Think Stats* by Allen B. Downey). Thus, it suggests that the income distribution is a log-normal distribution. Second, the log-log plot of CCDF looks like a log-normal distribution for the most part, but it becomes a straight line in the very high-income region (The jaggedness is due to the small sample size in this region). If you have read Section 4.2 of *Think Stats*, you know that the CCDF of a [Pareto distribution](http://en.wikipedia.org/wiki/Pareto_distribution) looks like a straight line on a log-log scale. So which one is it, log-normal or Pareto, or could it be both at the same time?
+These two plots tell us a lot about the income distribution. First, note that the CDF of log(income) is that of a normal distribution (compare it with Figure 4.5 in *Think Stats* by Allen B. Downey). Thus, it suggests that the income distribution is a log-normal distribution. Second, the log-log plot of CCDF looks like a log-normal distribution for the most part, but it becomes a straight line in the very high-income region (The jaggedness is due to the small sample size in this region). If you have read Section 4.2 of *Think Stats*, you know that the CCDF of a [Pareto distribution](http://en.wikipedia.org/wiki/Pareto_distribution) looks like a straight line on a log-log scale. So which one is it, log-normal or Pareto, or could it be both at the same time?
 
 According to Wikipedia on [log-normal distribution](http://en.wikipedia.org/wiki/Log-normal_distribution),
 
 > In economics, there is evidence that the income of 97%–99% of the population is distributed log-normally. (The distribution of higher-income individuals follows a Pareto distribution.)
 
-It seems like we have (or are about to) reproduce just such evidence. The major tasks in this problem are:
+It seems like we have (or are about to) reproduce just such evidence. Your tasks in this problem are:
 
 - Write *get_histogram()* function,
 - Write *get_pmf()* function,
@@ -51,18 +55,20 @@ Note that PMF is a *normalized* histogram, and you may want to call *get_histogr
 
 Here is a very easy algorithm to implement this function. See the definition of [empirical distribution function](http://en.wikipedia.org/wiki/Empirical_distribution_function) on Wikipedia. That means we can simply
 
-1. First, sort the *sequence* array. This will be our x-axis,
-2. Next, make an array of [1 / N, 2 / N, ..., 1]. This will be our y-axis. All you have to do is use *np.arange()* to make an array of the same length as the *sequence* array, and divide it by the length of *sequence*.
+1. First, sort the *sequence* array in ascending order. This will be our x-axis,
+2. Next, create an array of [1 / N, 2 / N, ..., 1]. This will be our y-axis. All you have to do is use *np.arange()* to make an array of the same length as the *sequence* array, and divide it by the length of *sequence*.
 
 According to Wikipedia, the resulting empirical CDF is an unbiased estimator for the true CDF.
 
+Note: Do NOT use *numpy.histogram()* function to do this. It uses binning, which may be useful in other cases but not in this case. The method I outlined above is a better characterization of the true CDF.
+
 #### Function: main()
 
-In the *main()* function, you have to use *Matplotlib* to plot similar figures to the ones shown above. Note that we import *get_columns* function from [stats2.py](https://github.com/INFO490/assignments/blob/master/hw7/stats2.py) module that we wrote in week 3, so if you are not sure if your *get_columns* function is written correctly, download both [stats2.py](https://github.com/INFO490/assignments/blob/master/hw7/stats2.py) and [stats.py](https://github.com/INFO490/assignments/blob/master/hw7/stats.py).
+In the *main()* function, you have to use *Matplotlib* to create plots similar to the ones shown above. Note that we import *get_columns()* function from the [stats2.py](https://github.com/INFO490/assignments/blob/master/hw7/stats2.py) module that we wrote in week 3, so if you are not sure if your *get_columns()* function is written correctly, download both [stats2.py](https://github.com/INFO490/assignments/blob/master/hw7/stats2.py) and [stats.py](https://github.com/INFO490/assignments/blob/master/hw7/stats.py).
 
 #### Submission instructions
 
-- Rename your file to `<firstname>-<lastname>-households.py` and upload it to Moodle.
+- Rename your file to `<firstname>-<lastname>-distributions.py` and upload it to Moodle.
 
 ### Problem 2. The Locomotive Problem.
 
@@ -72,15 +78,15 @@ In the *main()* function, you have to use *Matplotlib* to plot similar figures t
 
 The locomotive problem is found in Section 3.2 of *Think Bayes* by Allen B. Downey. We will rephrase the locomotive problem and apply it to our Illinois census data:
 
-> The households in 2012 Illinois census data are labeled using the serial numbers {1, ..., N}. You see a household with the serial number 1493780. Estimate how many households there are in Illinois.
+> The households in 2012 Illinois census data are labeled using the serial numbers {1, 2, ..., N}. You see a household with the serial number 1493780. Estimate how many households there are in Illinois.
 
-The number 1493780 is the serial number of the very last household in the *ss12pil.csv* file.
+The number 1493780 is the serial number of the very last household listed in the *ss12pil.csv* file.
 
-However, we will completely rewrite Downey's code by eliminating the class structure and using Numpy, because
+In this problem, we will completely rewrite Downey's code by eliminating the class structure and using Numpy, because
 
 1. Classes have their advantages, but they make it hard to see what is really going on under the hood, and our goal in this problem is to understand the underlying concepts,
 2. Using Numpy means no *for* loops, which in my opinion makes it easier to understand what's going on,
-3. Downey mostly uses pure Python. This is very slow, so we will use Numpy. The difference in speed may not matter much when we are dealing with a locomotive with the serial number 60 and a total number of locomotives on the order of thousands. But when the serial number is close to 1.5 million and the total number could be on the order of tens of millions, the difference in speed is substantial.
+3. Downey mostly uses pure Python. This is very slow, so we will use Numpy. The difference in speed may not matter much when we are dealing with serial number 60 and a total number of locomotives on the order of thousands. But when the serial number is close to 1.5 million and the total number of households could be on the order of tens of millions, the difference in speed is substantial.
 
 How substantial is the difference? Applying Downey's pure Python code to our problem, I got
 
@@ -102,7 +108,7 @@ but using Numpy, I got
 
 And that's for one serial number. When you run Bayesian updates for example, the difference quickly adds up.
 
-Your task is to write the following five functions:
+Your task in this problem is to write the following five functions:
 
 - get\_hypotheses()
 - get\_uniform_prior()
@@ -110,7 +116,7 @@ Your task is to write the following five functions:
 - get\_posterior()
 - get\_estimate()
 
-Note that if you use Numpy functions correctly, each function should not take more than one or two lines to write. I will give you hints on how to do this, but you don't have to follow my recommendations as long as your functions do what they are supposed to do, i.e. take the specified parameters and return the correct Numpy arrays. But remember that all functions must return Numpy arrays, so if you use *for* loops you code will be very inefficient.
+Note that if you use Numpy functions correctly, each function will not take more than one or two lines to write. I will give you hints on how to do this, but you don't have to follow my recommendations as long as your functions do what they are supposed to do, i.e. take the specified parameters and return the correct Numpy arrays. But remember that all functions must return Numpy arrays, so if you use *for* loops you code will be very inefficient.
 
 #### main
 
@@ -122,7 +128,7 @@ The main function is already written and provided for you. You don't have to wri
 
 Note that the number N will be used for building a uniform prior. So what is our prior belief regarding the number of households in IL before seeing the data? Not much except that we have some idea about the population of IL. A quick google search shows me that the population of IL in 2012 was 12.88 million. The number of households cannot be greater than the population, so it would be reasonable to use a hypotheses of [1, 2, ..., 12880000].
 
-Hint: See [numpy.arange()](http://docs.scipy.org/doc/numpy/reference/generated/numpy.arange.html).
+Hint: Use [numpy.arange()](http://docs.scipy.org/doc/numpy/reference/generated/numpy.arange.html).
 
 #### Function: get\_uniform_prior()
 
@@ -136,7 +142,7 @@ Hint: See [numpy.ones_like()](http://docs.scipy.org/doc/numpy/reference/generate
 
 - Write a function named *get_likelihood()* that takes an integer (data) and a Numpy array (hypotheses), and returns a Numpy array of floats (likelihood).
 
-The likelihood is P(D|H) in Bayes' theorem. Remember that hypotheses is a Numpy array of [1, 2, ..., N]. If the n-th element of hypotheses is smaller than data, the likelihood is zero because the serial number cannot be greater than the number of households. On the other hand, if the n-th element of hypotheses is greater than or equal to data, the question becomes what is the chance of getting a particular serial number given that there are hypotheses[n] persons? Thus, if hypotheses[n] >= data, we return 1 / hypotheses[n], and 0 otherwise.
+The likelihood is P(D|H) in Bayes' theorem. Remember that hypotheses is a Numpy array of [1, 2, ..., N]. If the n-th element of hypotheses is smaller than data, the likelihood is zero because the serial number cannot be greater than the number of households. On the other hand, if the n-th element of hypotheses is greater than or equal to data, the question becomes what is the chance of getting a particular serial number given that there are hypotheses[n] persons? Thus, if hypotheses[n] >= data, we have 1 / hypotheses[n], and 0 otherwise.
 
 Hint: Say you have the following Numpy arrays:
 
