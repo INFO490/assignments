@@ -8,7 +8,7 @@
 # Your code goes to the part where it says your code goes here.
 # Do not change anything else other than the part where it says your code goes here.
 # Do not import other modules.
-
+from __future__ import print_function
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
