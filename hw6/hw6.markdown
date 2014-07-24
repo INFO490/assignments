@@ -179,6 +179,8 @@ The *find_millionaires()* function takes an *sqlite3.Connection* object as an ar
 
 - Use *pandas.read_sql()* method to issue the same query as in Problem 1 and return the result as a *pandas.DataFrame* object.
 
+Note added: I named the function "find_millionaires" when I really should have called it "find_half_millionaires". Here you are executing the same query you did in Problem 1, i.e. finding those with income > $500,000.
+
 #### Submission Instructions
 
 Rename your file to `<firstname>-<lastname>-sqlcensus.py` and upload it to Moodle.
