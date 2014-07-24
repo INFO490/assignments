@@ -14,40 +14,40 @@ Predictably, most people work 40 hours a week. Next, we plot the CDF of the PINC
 
 ![cdf](cdf_log_income.png)
 
-and the plot of the CCDF of
+and also plot the CCDF,
 
 ![ccdf](log_ccdf_log_income.png)
 
-These two plots tell us a lot about the income distribution. First, note that the CDF of log(income) is that of a normal distribution (see Figure 4.5 in *Think Stats* by Allen B. Downey). Thus, it suggests that the income distribution follows a log-normal distribution. Second, the log-log plot of CCDF looks like a log-normal distribution for the most part, but it becomes almost a straight line in the very high-income region (The jaggedness is due to the small sample size in this region). If you read Section 4.2 in *Think Stats*, you know that the CCDF of a [Pareto distribution](http://en.wikipedia.org/wiki/Pareto_distribution) looks like a straight line on a log-log scale. So which one is it, or could it be both at the same time?
+These two plots tell us a lot about the income distribution. First, note that the CDF of log(income) is that of a normal distribution (see Figure 4.5 in *Think Stats* by Allen B. Downey). Thus, it suggests that the income distribution is a log-normal distribution. Second, the log-log plot of CCDF looks like a log-normal distribution for the most part, but it becomes a straight line in the very high-income region (The jaggedness is due to the small sample size in this region). If you have read Section 4.2 of *Think Stats*, you know that the CCDF of a [Pareto distribution](http://en.wikipedia.org/wiki/Pareto_distribution) looks like a straight line on a log-log scale. So which one is it, log-normal or Pareto, or could it be both at the same time?
 
-According to Wikipedia on [Log-normal distribution](http://en.wikipedia.org/wiki/Log-normal_distribution),
+According to Wikipedia on [log-normal distribution](http://en.wikipedia.org/wiki/Log-normal_distribution),
 
 > In economics, there is evidence that the income of 97%–99% of the population is distributed log-normally. (The distribution of higher-income individuals follows a Pareto distribution.)
 
 It seems like we have (or are about to) reproduce just such evidence. The major tasks in this problem are:
 
-- Write *get_hist()* function,
+- Write *get_histogram()* function,
 - Write *get_pmf()* function,
 - Write *get_cdf()* function, (CCDF is simply 1.0 - CDF)
 - Plot PMF of hours worked per week,
 - Plot CDF of income,
 - Plot CCDF of income.
 
-#### Function: get\_hist()
+#### Function: get\_histogram()
 
-- Write a function named *get_hist()* that takes a list and returns a dictionary of the form {value: frequency}.
+- Write a function named *get_histogram()* that takes a list and returns a dictionary of the form {value: frequency}.
 
-As the name suggests, this function returns the dictionary form of a histogram. See Section 2.3 in *Think Bayes* for hints.
+As the name suggests, this function returns the dictionary form of a histogram. See Section 2.3 of *Think Bayes* for hints.
 
 #### Function: get\_pmf()
 
 - Write a function named *get_pmf()* that takes a list and returns a dictionary of the form {value: probability}.
 
-Note that PMF is a *normalized* histogram, and you may want to use the *get_hist()* function. See Section 2.3 in *Think Bayes* for hints.
+Note that PMF is a *normalized* histogram, and you may want to call *get_histogram()* function from inside *get_pmf()* function. See Section 2.3 of *Think Bayes* for hints.
 
 #### Function: get\_cdf()
 
-- Write a function named *get_cdf()* that takes a Numpy array *sequence* and returns a tuple that represents the x and y axes of the (empirical) CDF.
+- Write a function named *get_cdf()* that takes an array *sequence* and returns a tuple that represents the x and y axes of the (empirical) CDF.
 
 Here is a very easy algorithm to implement this function. See the definition of [empirical distribution function](http://en.wikipedia.org/wiki/Empirical_distribution_function) on Wikipedia. That means we can simply
 
@@ -58,7 +58,7 @@ According to Wikipedia, the resulting empirical CDF is an unbiased estimator for
 
 #### Function: main()
 
-In the *main()* function, you have to use *Matplotlib* to plot similar figures to the ones shown above.
+In the *main()* function, you have to use *Matplotlib* to plot similar figures to the ones shown above. Note that we import *get_columns* function from [stats2.py](https://github.com/INFO490/assignments/blob/master/hw7/stats2.py) module that we wrote in week 3, so if you are not sure if your *get_columns* function is written correctly, download both [stats2.py](https://github.com/INFO490/assignments/blob/master/hw7/stats2.py) and [stats.py](https://github.com/INFO490/assignments/blob/master/hw7/stats.py).
 
 #### Submission instructions
 
@@ -118,9 +118,9 @@ The main function is already written and provided for you. You don't have to wri
 
 #### Function: get\_hypotheses()
 
-- Write a function named *get_hypotheses()* that takes two integers (the first serial number 1 and the final serial number N) and returns a Numpy array of integers [1, ..., N].
+- Write a function named *get_hypotheses()* that takes two integers (the first serial number 1 and the final serial number N) and returns a Numpy array of integers [1, 2, ..., N].
 
-Note that the number N is used to build a uniform prior. So what is our prior belief regarding the number of households in IL before seeing the data? Not much except that we have some idea about the population of IL. A quick google search shows me that the population of IL in 2012 was 12.88 million. The number of households cannot be greater than the population, so I think it is reasonable to use a hypotheses of [1, 2, ..., 12880000].
+Note that the number N will be used for building a uniform prior. So what is our prior belief regarding the number of households in IL before seeing the data? Not much except that we have some idea about the population of IL. A quick google search shows me that the population of IL in 2012 was 12.88 million. The number of households cannot be greater than the population, so it would be reasonable to use a hypotheses of [1, 2, ..., 12880000].
 
 Hint: See [numpy.arange()](http://docs.scipy.org/doc/numpy/reference/generated/numpy.arange.html).
 
@@ -176,7 +176,7 @@ Hint: Don't forget to normalize. Since adding up all elements of the posterior a
 
 #### Function: get\_estimate()
 
-- Write a function named *get_estimate()* that takes a two Numpy arrays (posterior) and returns a Numpy array of floats (estimate).
+- Write a function named *get_estimate()* that takes a two Numpy arrays (posterior and hypotheses) and returns a Numpy array of floats (estimate).
 
 Hint: Again, you can use element-wise multiplication of *hypotheses* and *posterior*, and our estimate is the sum of all elements in the product array.
 
@@ -209,9 +209,11 @@ You can find everything you need in [Numpy statistics functions](http://docs.sci
 
 Your task is to use Numpy functions to
 
-- Write a function named *get_lsqfit()* that takes two Numpy arrays and returns a tuple of two floats, slope and intercept.
+- Write a function named *get_lsqfit()* that takes two Numpy arrays and returns a tuple of two floats (slope and intercept).
 
-Numpy already has a [function](http://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.lstsq.html) that does this, but you may __not__ use this function in this problem. But it would be a good idea to make sure that your function produces the same result.
+Numpy already has a [function](http://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.lstsq.html) that does this, but you may __not__ use this function (or any other pre-built functions) in this problem. But it would be a good idea to compare your result with the Numpy least squares fit function to make sure that you got it right.
+
+If you are going to use the *numpy.var()* function, you want to specify an optional parameter *ddof*, i.e. use `numpy.var(ddof = 1)`. See Numpy manual and Section 8.2 of *Think Stats* for discussion on biased and unbiased estimators.
 
 #### Function: main()
 
