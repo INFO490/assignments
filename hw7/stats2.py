@@ -4,7 +4,6 @@
 
 # use Python 3 print() function
 from __future__ import print_function, division
-# use get_stats() function from week 2 problem 3
 from stats import get_stats
 
 def get_column(filename, column, header = True):
@@ -29,7 +28,7 @@ def get_column(filename, column, header = True):
         if header:
             next(f)
         for line in f:
-            data = line.split(',')
+            data = line.strip().split(',')
             
             if data[column] == '':
                 result += [0]
