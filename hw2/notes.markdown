@@ -1,0 +1,3 @@
+## Notes for posterity.
+
+- Some students will write their code in Windoze, and when you open up their files or try to run them with <code>./filename</code> in Linux, they won't run properly because of Windoze carriage returns (^M). So decide hown you want to handle this, and warn students about them with a clearer instruction, or rewrite script to automatically delete ^M's from their files if they came from Windoze.
