@@ -16,16 +16,16 @@ Welcome to the final week. Your final assignment is a mini-project. You will com
 	- Pre-processing (5 points): How well you understand the dataset, reasonable pre-processing.
  
     - Dimensional reduction
-        - Correctness (5 points): Does the code run and gives correct output?
-        - Readability (5 points): Is the code fully documented and uses good programming practices? Did you property cite the sources?
+        - Correctness (10 points): Does the code run and gives correct output?
+        - Readability (10 points): Is the code fully documented and uses good programming practices? Did you property cite the sources?
   
     - Clustering
-        - Correctness (5 points): Does the code run and gives correct output?
-        - Readability (5 points): Is the code fully documented and uses good programming practices? Did you property cite the sources?
+        - Correctness (10 points): Does the code run and gives correct output?
+        - Readability (10 points): Is the code fully documented and uses good programming practices? Did you property cite the sources?
 	
     - Classification
-        - Correctness (5 points): Does the code run and gives correct output?
-        - Readability (5 points): Is the code fully documented and uses good programming practices? Did you property cite the sources?
+        - Correctness (10 points): Does the code run and gives correct output?
+        - Readability (10 points): Is the code fully documented and uses good programming practices? Did you property cite the sources?
  
  
 ### Understanding Your Data and Pre-processing
@@ -34,9 +34,9 @@ You might want to spend some time to go through the [data dictionary](http://www
 
 All told, there are 286 variables (and 127,208 rows) in the dataset. However, analyzing all of these variables is not necessary because many of them repeat similar information and are therefore redundant. One example is AGEP (person's age) and MARHYP (year last married). The year a person was last married gives you a hint about the person's age, and we expect there to be a strong correlation between the two variables. One of them is perhaps redundant, and we can use only one variable to represent the same information. I will show you in the following section how to use dimensional reduction to pick the useful variables.
 
-But before you start doing the actual data mining, you should always first perform the necessary pre-processing. Recall that there were missing values in many of the columns. Pre-processing should include replacing missing values or removing the rows with bad values (although I think it's safe to assume that there are no bad values in the census data). In addition to the missing or bad values, there might be some statistical outliers that could skew your analysis. Furthermore, since each column has a different range of values, your pre-processing should include standardization (scaling) of your dataset. For details, see (Preprocessing data)[http://scikit-learn.org/stable/modules/preprocessing.html] section of *Scikit-learn* documentation.
+But before you start doing the actual data mining, you should always first perform the necessary pre-processing. Recall that there were missing values in many of the columns. Pre-processing should include replacing missing values or removing the rows with bad values (although I think it's safe to assume that there are no bad values in the census data). In addition to the missing or bad values, there might be some statistical outliers that could skew your analysis. Furthermore, since each column has a different range of values, your pre-processing should include standardization (scaling) of your dataset. For details, see [Preprocessing data](http://scikit-learn.org/stable/modules/preprocessing.html) section of *Scikit-learn* documentation.
 
-I will use the following variables in the following example:
+I will use the following variables in this example:
 
 - AGEP: Age
 - JWMNP: Travel time to work
@@ -50,17 +50,17 @@ Assuming I have read the necessary columns from the CSV file and stored them in 
     >>> X.shape
 	(127208, 6)
 	
-I removed the missing values and statistical values from each column, e.g. for the AGEP column
+I removed the missing values and statistical outliers from each column, e.g. for the AGEP column
 
     mask = (X[:, 0] >= 18) # column 0 is AGEP, keep only 18 years or older
-	X = X[mask]
+    X = X[mask]
 
-Since variables are on different scales, we also need to standardize them. So I scaled my dataset by doing
+Since the variables are on different scales, we also need to standardize them. So I scaled my dataset by doing
 
-    scaler = preprocessing.StandardScaler().fit(X)
+    scaler = sklearn.preprocessing.StandardScaler().fit(X)
     X_scaled = scaler.transform(X)
 
-See (Preprocessing data)[http://scikit-learn.org/stable/modules/preprocessing.html] section of *Scikit-learn* documentation. Now *X_scaled* should be ready to be used in actual data mining.
+See [Preprocessing data](http://scikit-learn.org/stable/modules/preprocessing.html) section of *Scikit-learn* documentation. Now *X_scaled* should be ready to be used in actual data mining.
 
 Pre-processing (which includes understanding your dataset) is the most time-consuming yet an essential part of data mining; I heard one data mining expert say that pre-processing could take up to 60 percent of her time.
 
@@ -69,7 +69,7 @@ Pre-processing (which includes understanding your dataset) is the most time-cons
 In this example, I will use Principal Component Anlalysis (PCA) for dimensional reduction. I won't repeat how to use *Scikit-learn* to perform PCA; refer to the lessons or use online resources. After performing PCA, I printed out the frist three components:
 
     >>> print(np.round(pca.components_, decimals = 2))
-	[[-0.23 -0.11  0.2  -0.35 -0.23 -0.36]
+    [[-0.23 -0.11  0.2  -0.35 -0.23 -0.36]
      [ 0.47 -0.16 -0.5  -0.22 -0.21 -0.18]
      [ 0.1   0.95 -0.07 -0.23  0.14 -0.26]]
 
@@ -144,7 +144,7 @@ Put together, they explain 83.7% of the total variance:
 
 How can we use this information? One way would be to pick one variable within each component to represent that component. Some information will be lost, but for example, since WAGP is strongly correlated with PINCP, one of them is probably redundant. That is, picking WAGP to represent the whole first component might not have a major impact on the final anlysis. Similary, I conclude that it is likely that MARHYP is redundant and choose AGEP to represent the second component.
 
-Another useful application of PCA is visualization. Since we humans cannot visualize more than three dimensions, dimensional reduction is necessary for visualization when we have more than 3 variables. Let's use the first two components of PCA to make a scatter plot:
+Another useful application of PCA is visualization. Since we humans cannot visualize more than three dimensions, dimensional reduction is necessary for visualization when we have more than 3 variables. Let's use the first two components of PCA to make a 2-D scatter plot:
 
 ![PCA-2d](pca_2d.png)
 
@@ -152,22 +152,22 @@ This looks like a rotated and slightly distorted version of the income vs. age p
 
 ![hw3-age-income](hw3_age_income.png)
 
-So the two-dimensional scatter plots visually confirms that the first and second components represent income and age, respectively. We can also include the third PCA component to make a 3d scatter plot:
+So the two-dimensional scatter plots visually confirm that the first and second components represent income and age, respectively. We can also include the third PCA component to make a 3-D scatter plot:
 
 ![PCA-3d](pca_3d.png)
 
 ### Clustering 
 
-As the previous plots suggest, there seems to be dinstinct clusters in our variable space. Here I'll demonstrate the use of a simple clustering algorithm, *K-means*. I used `sklearn.cluster.KMeans` on the `X_pca` array from the previous section to find labels for each individual:
+As the previous plots suggest, there seem to be dinstinct clusters in our variable space. Here I'll demonstrate the use of a simple clustering algorithm, *K-means*. I used `sklearn.cluster.KMeans` on the `X_pca` array from the previous section to find labels for each individual:
 
     rng = np.random.RandomState(490)
-	kmeans = KMeans(n_clusters = 6, random_state = rng)
+    kmeans = KMeans(n_clusters = 6, random_state = rng)
 
 Note that the number of clusters, `n_clusters`, is a parameter that will vary depending on your dataset; that is, you have to try different numbers and see which number best represents your dataset. When doing this, it might be useful to visualize in a 2-D or 3-D plot such as the following:
 
 ![kmeans-3d-3](kmean_3d_3.png)
 
-But in the above plot, the axes are in terms of the PCA components, so it's difficult to interpret this. To convert the axes to something comprehensible, I used what we learned in the previous section, i.e. the first component represents income, the second component represents age, and the third component represts travel time to work. So, I used AGEP, JWMNP, and PINCP columns for the axes. Even if we change the axes, we can still use the `kmeans.labels_` array to label because the order of rows do not change. For example, here's a snippet from my code:
+But in the above plot, the axes are in terms of the PCA components, so it's difficult to interpret this. To convert the axes to something comprehensible, I used what we learned in the previous section, i.e. the first component represents income, the second component represents age, and the third component represents transporation. So, I used AGEP, JWMNP, and PINCP columns for the axes. Even if we change the axes, we can still use the `kmeans.labels_` array to label because the order of rows do not change. For example, here's a snippet from my code:
 
     X_real = np.column_stack((X[:, 0], X[:, 1], X[:, 5])) # AGEP, JWMNP, PINCP columns
 	y = kmeans.label_
