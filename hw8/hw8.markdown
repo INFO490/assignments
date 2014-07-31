@@ -13,18 +13,18 @@ Welcome to the final week. Your final assignment is a mini-project. You will com
 - Grading rubric (70 points total)
     - Overall (5 points): Creativity, soundness of hypothesis and conclusion.
 
-	- Pre-processing (5 points): How well you understand the dataset, reasonable pre-processing.
+	- Pre-processing (5 points): How well do you seem to understand the dataset? Is the pre-processing reasonable?
  
     - Dimensional reduction
-        - Correctness (10 points): Does the code run and gives correct output?
+        - Correctness (10 points): Does the code run and give correct output?
         - Readability (10 points): Is the code fully documented and uses good programming practices? Did you property cite the sources?
   
     - Clustering
-        - Correctness (10 points): Does the code run and gives correct output?
+        - Correctness (10 points): Does the code run and give correct output?
         - Readability (10 points): Is the code fully documented and uses good programming practices? Did you property cite the sources?
 	
     - Classification
-        - Correctness (10 points): Does the code run and gives correct output?
+        - Correctness (10 points): Does the code run and give correct output?
         - Readability (10 points): Is the code fully documented and uses good programming practices? Did you property cite the sources?
  
  
@@ -126,9 +126,9 @@ Interpreting this takes a little bit of work. Let me first translate this into a
 
 We need to find which variables are most strongly correlated with each component. The larger the magnitude, the stronger the correlation. How large is large? That is a subject decision, and you need to determine at what number the correlation is strong enough. Here I chose 0.3 and bolded numbers greater than 0.3.
 
-We see that the first component is strongly correlated with WAGP and PINCP. It looks like the first component represents income. Both are positive, so the annual income tends to increase with increasing wage/salary income.
+We see that the first component is strongly correlated with WAGP and PINCP. It looks like the first component represents income. Both are negative, so the annual income tends to decrease with decreasing wage/salary income.
 
-The second component is strongly correlated with AGEP and MARHYP. It looks like this component represents age. AGEP is positive, while MARHYP is negative. Youger people were married in more recent years (higher MARHYP), while older people were married in more distant in the past (lower MARHYP).
+The second component is strongly correlated with AGEP and MARHYP. It looks like this component represents age. AGEP is positive, while MARHYP is negative. Youger people were married in more recent years (higher MARHYP), while older people were married more distant in the past (lower MARHYP).
 
 The third component increases with only of the values, JWMNP, and represents transportation to work.
 
@@ -163,11 +163,11 @@ As the previous plots suggest, there seem to be dinstinct clusters in our variab
     rng = np.random.RandomState(490)
     kmeans = KMeans(n_clusters = 6, random_state = rng)
 
-Note that the number of clusters, `n_clusters`, is a parameter that will vary depending on your dataset; that is, you have to try different numbers and see which number best represents your dataset. When doing this, it might be useful to visualize in a 2-D or 3-D plot such as the following:
+Note that the number of clusters, `n_clusters`, is a parameter that will vary depending on your dataset; that is, you have to try different numbers and see which number best represents your dataset. When doing this, it might be useful to create a 2-D or 3-D plot such as the following:
 
 ![kmeans-3d-3](kmean_3d_3.png)
 
-But in the above plot, the axes are in terms of the PCA components, so it's difficult to interpret this. To convert the axes to something comprehensible, I used what we learned in the previous section, i.e. the first component represents income, the second component represents age, and the third component represents transporation. So, I used AGEP, JWMNP, and PINCP columns for the axes. Even if we change the axes, we can still use the `kmeans.labels_` array to label because the order of rows do not change. For example, here's a snippet from my code:
+In the above plot, the axes are in terms of the PCA components, so it's difficult to interpret this. To convert the axes to something comprehensible, I used what we learned in the previous section, i.e. the first component represents income, the second component represents age, and the third component represents transporation. So, I used AGEP, JWMNP, and PINCP columns for the axes. Even if we change the axes, we can still use the same `kmeans.labels_` array for the cluster label because the order of rows do not change. For example, here's a snippet from my code:
 
     X_real = np.column_stack((X[:, 0], X[:, 1], X[:, 5])) # AGEP, JWMNP, PINCP columns
 	y = kmeans.label_
@@ -200,21 +200,21 @@ These are difficult to interpret since they are in terms of pca components and s
 	 [    38    -14   2004 200274     53 218185]
 	 [    40     44   2000  40298     40  41409]]
 
-Again, the variables are [AGEP, JWMNP, MARHYP, WAGP, WKHP, PINCP]. So that means the first cluster center has age = 51, travel time to work = 18 minutes, year married = 1988, wage income = $34,155, hours worked per week = 35 hours, and total annual income = $40,528, and so on for the other clusters.
+Again, the variables are [AGEP, JWMNP, MARHYP, WAGP, WKHP, PINCP]. So that means the first cluster can be represented by an average person (a cluster center) who was 51 years old (in 2012), spent 18 minutes to travel to work, was married in 1988, made $34,155 from wage/salary, worked 35 hours a week, and made $40,528 in total; and so on for the other clusters.
 
 ### Classification
 
-We have seen that there's some correlation between the variables AGEP, JWMNP, MARHYP, WAGP, WKHP, and PINCP. In particular, the wage income, WAGP, is strongly correlated with the total annual income, PINCP, and if we know one, we can probably predict the other.
+We have seen that there is some correlation between the variables AGEP, JWMNP, MARHYP, WAGP, WKHP, and PINCP. In particular, the wage income, WAGP, is strongly correlated with the total annual income, PINCP, and if we know one, we can probably predict the other.
 
 To demonstrate this, I'll train a Gaussian Naive Bayes classifier on five variables, AGEP, JWMNP, MARHYP, WAGP, and WKHP, using PINCP as the truth label. Then, I'll try to predict whether a person has an income higher than $40,000 or not.
 
-As we did previously, I performed the necessary pre-processing on the dataset. The PINCIP column is the label:
+As previously discussed, I performed some pre-processing on the dataset to produce the array *X*. The PINCIP column is the label:
 
 	y = (y >= 40000).astype(int)
 
 Then I split the data into training and validation sets:
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y)
+    X_train, X_test, y_train, y_test = sklearn.cross_validation.train_test_split(X, y)
 
 Training the Gaussian Naive Bayes model on the training set,
 
@@ -223,11 +223,11 @@ Training the Gaussian Naive Bayes model on the training set,
 
 and using the fitted model to predict the labels of the test data,
 
-    predicted = clf.predict(X_test)
+    y_predicted = clf.predict(X_test)
 
 I got
 
-	>>> x = (predicted == y_test).sum()
+	>>> x = (y_predicted == y_test).sum()
 	>>> y = len(y_test)
 	>>> print('%i matched out of %i' % (x, y))
 	14019 matched out of 15272
