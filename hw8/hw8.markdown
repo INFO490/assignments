@@ -2,7 +2,7 @@
 
 ### Overview
 
-Welcome to the final week. Your final assignment is a mini-project. You will come up with your own hypothesis, test the hypothesis using data mining techniques from week 8, and write an IPython notebook detailing your findings. Note that there is no template this week. You will get to write your own code from start to finish.
+Welcome to the final week. Your final assignment is a mini-project. You will come up with your own hypothesis, test the hypothesis using data mining techniques from week 8, and write an IPython notebook detailing your findings. Note that there is no template this week. You will get to write your own code from start to finish. You will find some examples of what you can do in the following sections.
 
 - You should state clearly what you are trying to accomplish within each task.
 
