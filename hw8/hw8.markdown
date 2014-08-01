@@ -157,12 +157,12 @@ So the two-dimensional scatter plots visually confirm our previous conclusion, i
 
 ### Clustering 
 
-As you might have noticed in the previous plots, there seem to be distinct clusters in our variable space. Here I'll demonstrate the use of a simple clustering algorithm, *K-means*. I used `sklearn.cluster.KMeans` on the `X_pca` array from the previous section to find labels for each individual:
+As you might have noticed in the previous plots, there seem to be distinct clusters in our variable space. Here I'll demonstrate the use of a simple clustering algorithm, *K-means*. I used `sklearn.cluster.KMeans` on the *X_pca* array from the previous section to find labels for each individual:
 
     rng = np.random.RandomState(490)
     kmeans = KMeans(n_clusters = 6, random_state = rng)
 
-Note that the number of clusters, `n_clusters`, is a parameter that will vary depending on your dataset; that is, you have to try different numbers and see which number best represents your dataset. When doing this, it might be helpful to create a 2-D or 3-D plot such as the following:
+Note that the number of clusters *`n_clusters*, is a parameter that will vary depending on your dataset; that is, you have to try different numbers and see which number best represents your dataset. When doing this, it might be helpful to create a 2-D or 3-D plot such as the following:
 
 ![kmeans-3d-3](kmean_3d_3.png)
 
@@ -187,7 +187,7 @@ The centers of these clusters can be considered representatives of each cluster.
           [-5.23535075, -2.54708801, -2.74394203],
           [-0.04576878, -0.46005761,  0.86058965]])
 
-These are difficult to interpret since they are in terms of PCA components and standardized scales. We can use `inverse_transform()` functions to transform them back to find a representative for each cluster:
+These are difficult to interpret since they are in terms of PCA components and standardized scales. We can use *inverse_transform()* functions to transform them back to find a representative for each cluster:
 
     >>> centers_real  = pca.inverse_transform(kmeans.cluster_centers_)
 	>>> centers_real_unscaled = scaler.inverse_transform(centers_real)
