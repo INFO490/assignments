@@ -185,7 +185,7 @@ Hint: Don't forget to normalize. Since adding up all elements of the posterior a
 
 #### Function: get\_estimate()
 
-- Write a function named *get_estimate()* that takes two Numpy arrays (posterior and hypotheses) and returns a Numpy array of floats (estimate).
+- Write a function named *get_estimate()* that takes two Numpy arrays (posterior and hypotheses) and returns a floating point (estimate).
 
 Hint: Again, you can use element-wise multiplication of *hypotheses* and *posterior*, and our estimate is the sum of all elements in the product array.
 
