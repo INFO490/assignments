@@ -88,7 +88,7 @@ def get_posterior(data, hypotheses):
 def get_estimate(posterior, hypotheses):
     '''
     Takes a two arrays (posterior and hypotheses).
-    Returns a Numpy array of floats (estimate).
+    Returns a float (estimate).
 
     Examples:
     >>> import numpy as np
