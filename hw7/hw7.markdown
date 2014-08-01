@@ -39,13 +39,13 @@ It seems like we have (or are about to) reproduce just such evidence. Your task 
 
 - Write a function named *get_histogram()* that takes a list and returns a dictionary of the form {value: frequency}.
 
-As the name suggests, this function returns the dictionary form of a histogram. See Section 2.3 of *Think Bayes* for hints.
+As the name suggests, this function returns the dictionary form of a histogram. See Section 2.3 of *Think Stats* for hints.
 
 #### Function: get\_pmf()
 
 - Write a function named *get_pmf()* that takes a list and returns a dictionary of the form {value: probability}.
 
-Note that PMF is a *normalized* histogram, and you may want to call *get_histogram()* function from inside *get_pmf()* function. See Section 2.3 of *Think Bayes* for hints.
+Note that PMF is a *normalized* histogram, and you may want to call *get_histogram()* function from inside *get_pmf()* function. See Section 2.3 of *Think Stats* for hints.
 
 #### Function: get\_cdf()
 
