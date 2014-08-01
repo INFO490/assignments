@@ -19,10 +19,10 @@ def get_histogram(sequence):
     Takes a list and returns a dictionary of the form {value: frequency}.
 
     Examples:
-    >>> get_histogram(['a', 'a', 'b', 'b', 'b', 'c'])
-    {'a': 2, 'b': 3, 'c': 1}
-    >>> get_histogram([4, 5, 6, 6, 6])
-    {4: 1, 5: 1, 6: 3}
+    >>> get_histogram(['a', 'a', 'b', 'b', 'b', 'c']) == {'a': 2, 'b': 3, 'c': 1}
+    True
+    >>> get_histogram([4, 5, 6, 6, 6]) == {4: 1, 5: 1, 6: 3}
+    True
     '''
     hist = {}
 
@@ -35,10 +35,10 @@ def get_pmf(sequence):
     Takes a list and returns a dictionary of the form {value: probability}.
 
     Examples:
-    >>> get_pmf(['a', 'a', 'b', 'b', 'b', 'c'])
-    {'a': 0.3333333333333333, 'b': 0.5, 'c': 0.16666666666666666}
-    >>> get_pmf([4, 5, 6, 6, 6])
-    {4: 0.2, 5: 0.2, 6: 0.6}
+    >>> get_pmf(['a', 'b', 'b', 'b', 'c']) == {'a': 0.2, 'b': 0.6, 'c': 0.2}
+    True
+    >>> get_pmf([4, 5, 6, 6, 6]) == {4: 0.2, 5: 0.2, 6: 0.6}
+    True
     '''
     pmf = {}
     
