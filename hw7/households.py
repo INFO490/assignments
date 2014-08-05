@@ -33,7 +33,7 @@ def get_uniform_prior(hypotheses):
     Examples:
     >>> import numpy as np
     >>> x = np.array([1, 2, 3, 4, 5])
-    >>> uniform_prior(x)
+    >>> get_uniform_prior(x)
     array([ 0.2,  0.2,  0.2,  0.2,  0.2])
     '''
     
@@ -49,13 +49,13 @@ def get_likelihood(data, hypotheses):
     Examples:
     >>> import numpy as np
     >>> x = np.array([1, 2, 3, 4, 5])
-    >>> likelihood(1, x)
+    >>> get_likelihood(1, x)
     array([ 1.        ,  0.5       ,  0.33333333,  0.25      ,  0.2       ])
-    >>> likelihood(2, x)                                                              
+    >>> get_likelihood(2, x)
     array([ 0.        ,  0.5       ,  0.33333333,  0.25      ,  0.2       ])
-    >>> likelihood(3, x)                                                              
+    >>> get_likelihood(3, x)
     array([ 0.        ,  0.        ,  0.33333333,  0.25      ,  0.2       ])
-    >>> likelihood(6, x)                                                              
+    >>> get_likelihood(6, x)
     array([ 0.,  0.,  0.,  0.,  0.])
     '''
 
@@ -71,13 +71,13 @@ def get_posterior(data, hypotheses):
     Examples:
     >>> import numpy as np
     >>> x = np.array([1, 2, 3, 4, 5])
-    >>> posterior(1, x)
+    >>> get_posterior(1, x)
     array([ 0.4379562 ,  0.2189781 ,  0.1459854 ,  0.10948905,  0.08759124])
-    >>> posterior(2, x)                                                              
+    >>> get_posterior(2, x)
     array([ 0.        ,  0.38961039,  0.25974026,  0.19480519,  0.15584416])
-    >>> posterior(3, x)                                                              
+    >>> get_posterior(3, x)
     array([ 0.        ,  0.        ,  0.42553191,  0.31914894,  0.25531915])
-    >>> posterior(5, x)                                                              
+    >>> get_posterior(5, x)
     array([ 0.,  0.,  0.,  0.,  1.])
     '''
 
