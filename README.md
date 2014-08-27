@@ -16,7 +16,9 @@ Refer to Week 1 Lesson 3 on how to use Git.
 
 - [Week 1 Assignment](https://github.com/INFO490/assignments/tree/master/hw1)
  
- - Problem 1.
+ - Part 1. Navigating through your file system.
+ - Part 2. Working with data file.
+ - Part 3. Using awk and sed to manipulate files.
 
 - [Week 2 Assignment](https://github.com/INFO490/assignments/tree/master/hw2)
 
